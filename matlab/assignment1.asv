@@ -9,6 +9,9 @@ fs = 2*n;
 y = fftshift(Y);
 
 figure(1)
+hold on
 plot(F,abs(y));
+%%
+
 figure(2)
-plot(F,imag(y));
+plot(F,phase(Y));
