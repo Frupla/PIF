@@ -2,7 +2,7 @@ function [Y, freq] = make_spectrum(signal, fs)
     
 
 
-Y = fft(signal);
+Y = fftshift(fft(signal));
 
 Y = Y/length(Y);
 
