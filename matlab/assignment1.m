@@ -20,7 +20,7 @@ plot(F2,y2_dB);
 hold off
 xlim([-length(y1), length(y1)]);
 title('Magnitude [dB]');
-
+legend('500hz','499hz');
 
 %% 1.2
 % part 1
@@ -87,6 +87,7 @@ hold on
 semilogx(F,20*log10(abs(Y))); % plotting the x axis logarithmically
 plot(F(3+length(F)/2),2*log10(abs(Y(3))),'O');
 hold off
+title('First peak');
 xlim([0 length(F)/2]);
 grid()
 %% Part 4
