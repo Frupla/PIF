@@ -11,7 +11,6 @@ Y = Y/length(Y); % the values of Y needs to be normalized with the amount
                  
 delta_f = fs/length(signal);  % The increment in frequency
 freq  = -fs/2:delta_f:fs/2-delta_f; % The nyquist frequceny is fs/2, 
-                                    % therefore this is the highest/lowest
-                                    % possible values
+                                    % therefore this is the highest
 
 end
