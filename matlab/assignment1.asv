@@ -1,50 +1,57 @@
 %% 1.1
-n = 2^11;
-fs = 2*n;
-[T, S] = generateSignal(1, 500, 0, fs, 0.5); 
+fs = 2^12; % fft works in sets of 2^n, so fs should be set to be a multiple of 2 
+[T1, S1] = generate_signal(1, 500, 0, fs, 0.5); 
+[T2, S2] = generate_signal(1, 499, 0, fs, 0.5); 
+% A signal for 500Hz and 499 Hz is generated
 
-[y, F] = make_spectrum(S,fs);
+[y1, F1] = make_spectrum(S1,fs);
+[y2, F2] = make_spectrum(S2,fs);
+% The signals are fourier transformed and shifted
 
-y_dB = 20*log10(abs(y));
 
+y1_dB = 20*log10(abs(y1));
+y2_dB = 20*log10(abs(y2));
+% the signals are turned into the decibel format
+% and plottet
 figure(1)
-plot(F,y_dB);
-xlim([-length(y), length(y)]);
-figure(2)
-plot(F,real(y));
-xlim([-length(y), length(y)]);
-figure(3)
-plot(F,imag(y));
-xlim([-length(y), length(y)]);
-figure(4)
-plot(F,angle(y));
-xlim([-length(y), length(y)]);
+hold on
+plot(F1,y1_dB);
+plot(F2,y2_dB);
+hold off
+xlim([-length(y1), length(y1)]);
+title('Magnitude [dB]');
+
 
 %% 1.2
 % part 1
-N = 4;
+N = 4; % initialisation of variables
 f0 = 25;
 phi = pi/3;
-fs = 5000;
+fs = 5000; 
 T_s = 0.1;
 k = 0;
+% cos(2*pi * 2^k * f0 * t + k * pi/3):
 [t, s0] = generate_sinusoid(1, f0, k*phi, fs, T_s);
 s = s0;
-% cos(2*pi * 2^k * f0 * t + k * pi/3) f0 = 25
 for k = 1:N
     [t, s0] = generate_sinusoid(1, f0*2^k, k*phi-1/pi, fs, T_s);
     s = s0 + s;
 end
 
-t = ones(1,length(t))*0.8 + t;
+t = ones(1,length(t))*0.8 + t; % time vector is changed into [0.8, 0.9]
 
-figure(1)
-plot(t,s);
+figure(3)
+plot(t,s); % Plotting the sinsusoid
+% Using mad matlab skillz to make a title with a sum sign in it:
+str = '$$ s(n)=\sum^{4}_{k=0} cos\left(2\pi\cdot2^{k}f_{0}\cdot t + k \cdot \frac{\pi}{3}\right) $$';
+title(str,'Interpreter','latex') 
+
 
 % part 2
 
-[Y, F] = make_spectrum(s, fs);
-figure(1)
+[Y, F] = make_spectrum(s, fs); % Making a spectrum for the signal from before
+figure(4)
+title('');
 subplot(2,1,1)
 plot(F,20*log10(abs(Y)));
 xlim([-length(Y), length(Y)]);
@@ -61,7 +68,7 @@ yticks(0:pi:4*pi);
 yticklabels({'0','\pi','2\pi','3\pi','4\pi'});
 grid();
 
-figure(2)
+figure(5)
 subplot(2,1,1)
 plot(F,real(Y));
 xlim([-length(Y), length(Y)]);
@@ -75,18 +82,23 @@ title('Imaginary part');
 grid();
 
 %% part 3
-figure(3)
+figure(6)
+hold on
 semilogx(F,20*log10(abs(Y)));
+plot(F(3+length(F)/2),2*log10(abs(Y(3))),'O');
+hold off
 xlim([0 length(F)/2]);
 grid()
+%% Part 4
+audiowrite('test.wav',s,fs,'BitsPerSample',16);
 %%
-audiowrite('test.wav',Y,fs,'BitsPerSample',16);
-[l, f] = importSound('test.wav');
+[l, f] = import_sound('test.wav');
 %%
-figure(4)
+figure(7)
 hold on
 plot(t,s);
-plot(
+plot(t,l);
 hold off
+
 
 

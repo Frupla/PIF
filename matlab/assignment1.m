@@ -1,15 +1,18 @@
 %% 1.1
-n = 2^11;
-fs = 2*n;
-[T1, S1] = generateSignal(1, 500, 0, fs, 0.5); 
-[T2, S2] = generateSignal(1, 499, 0, fs, 0.5); 
+fs = 2^12; % fft works in sets of 2^n, so fs should be set to be a multiple of 2 
+[T1, S1] = generate_signal(1, 500, 0, fs, 0.5); 
+[T2, S2] = generate_signal(1, 499, 0, fs, 0.5); 
+% A signal for 500Hz and 499 Hz is generated
 
 [y1, F1] = make_spectrum(S1,fs);
 [y2, F2] = make_spectrum(S2,fs);
+% The signals are fourier transformed and shifted
+
 
 y1_dB = 20*log10(abs(y1));
 y2_dB = 20*log10(abs(y2));
-
+% the signals are turned into the decibel format
+% and plottet
 figure(1)
 hold on
 plot(F1,y1_dB);
@@ -18,48 +21,37 @@ hold off
 xlim([-length(y1), length(y1)]);
 title('Magnitude [dB]');
 
-% figure(2)
-% subplot(2,1,1)
-% hold on
-% plot(F1,real(y1));
-% plot(F2,real(y2));
-% hold off
-% xlim([-length(y1), length(y1)]);
-% title('Real part');
-% subplot(2,1,2)
-% hold on
-% plot(F1,imag(y1));
-% plot(F2,imag(y2));
-% hold off
-% xlim([-length(y1), length(y1)]);
-% title('Imaginary part');
-
 
 %% 1.2
 % part 1
-N = 4;
+N = 4; % initialisation of variables
 f0 = 25;
 phi = pi/3;
-fs = 5000;
+fs = 5000; 
 T_s = 0.1;
 k = 0;
+% cos(2*pi * 2^k * f0 * t + k * pi/3):
 [t, s0] = generate_sinusoid(1, f0, k*phi, fs, T_s);
 s = s0;
-% cos(2*pi * 2^k * f0 * t + k * pi/3) f0 = 25
 for k = 1:N
     [t, s0] = generate_sinusoid(1, f0*2^k, k*phi-1/pi, fs, T_s);
     s = s0 + s;
 end
 
-t = ones(1,length(t))*0.8 + t;
+t = ones(1,length(t))*0.8 + t; % time vector is changed into [0.8, 0.9]
 
 figure(3)
-plot(t,s);
+plot(t,s); % Plotting the sinsusoid
+% Using mad matlab skillz to make a title with a sum sign in it:
+str = '$$ s(n)=\sum^{4}_{k=0} cos\left(2\pi\cdot2^{k}f_{0}\cdot t + k \cdot \frac{\pi}{3}\right) $$';
+title(str,'Interpreter','latex') 
+
 
 % part 2
 
-[Y, F] = make_spectrum(s, fs);
-figure(4)
+[Y, F] = make_spectrum(s, fs); % Making a spectrum for the signal from before
+
+figure(4) % Magnitude and phase
 subplot(2,1,1)
 plot(F,20*log10(abs(Y)));
 xlim([-length(Y), length(Y)]);
@@ -76,7 +68,7 @@ yticks(0:pi:4*pi);
 yticklabels({'0','\pi','2\pi','3\pi','4\pi'});
 grid();
 
-figure(5)
+figure(5) % Real and imaginary part
 subplot(2,1,1)
 plot(F,real(Y));
 xlim([-length(Y), length(Y)]);
@@ -92,21 +84,24 @@ grid();
 %% part 3
 figure(6)
 hold on
-semilogx(F,20*log10(abs(Y)));
+semilogx(F,20*log10(abs(Y))); % plotting the x axis logarithmically
 plot(F(3+length(F)/2),2*log10(abs(Y(3))),'O');
 hold off
 xlim([0 length(F)/2]);
 grid()
+%% Part 4
+audiowrite('test.wav',s,fs,'BitsPerSample',16); % saving the sound file
 %%
-audiowrite('test.wav',s,fs,'BitsPerSample',16);
+[l, f] = import_sound('test.wav'); % loading the sound file
 %%
-[l, f] = import_sound('test.wav');
-%%
-figure(7)
+figure(7) % plotting the sound file with the original
 hold on
 plot(t,s);
 plot(t,l);
+title('A signal before and after being saved and loaded');
 hold off
+
+% Oh boy, that sure is some cutoff
 
 
 
