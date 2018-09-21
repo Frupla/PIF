@@ -104,5 +104,19 @@ hold off
 
 % Oh boy, that sure is some cutoff
 
+%%
+f = 200;
+fs = 500;
+[t,s] = generate_sinusoid(1,f,0,fs,0.2);
+y = conv(ones(5,1),s(:));
+
+figure(8)
+subplot(2,1,1)
+plot(t,s)
+%title('sinusoid with f = 10Hz');
+
+subplot(2,1,2)
+plot(0:length(y)-1,y)
+title('convoluted sinusoid');
 
 

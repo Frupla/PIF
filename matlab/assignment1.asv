@@ -20,7 +20,7 @@ plot(F2,y2_dB);
 hold off
 xlim([-length(y1), length(y1)]);
 title('Magnitude [dB]');
-
+legend('500hz','499hz');
 
 %% 1.2
 % part 1
@@ -50,8 +50,8 @@ title(str,'Interpreter','latex')
 % part 2
 
 [Y, F] = make_spectrum(s, fs); % Making a spectrum for the signal from before
-figure(4)
-title('');
+
+figure(4) % Magnitude and phase
 subplot(2,1,1)
 plot(F,20*log10(abs(Y)));
 xlim([-length(Y), length(Y)]);
@@ -68,7 +68,7 @@ yticks(0:pi:4*pi);
 yticklabels({'0','\pi','2\pi','3\pi','4\pi'});
 grid();
 
-figure(5)
+figure(5) % Real and imaginary part
 subplot(2,1,1)
 plot(F,real(Y));
 xlim([-length(Y), length(Y)]);
@@ -84,21 +84,37 @@ grid();
 %% part 3
 figure(6)
 hold on
-semilogx(F,20*log10(abs(Y)));
+semilogx(F,20*log10(abs(Y))); % plotting the x axis logarithmically
 plot(F(3+length(F)/2),2*log10(abs(Y(3))),'O');
 hold off
+title('First peak');
 xlim([0 length(F)/2]);
 grid()
 %% Part 4
-audiowrite('test.wav',s,fs,'BitsPerSample',16);
+audiowrite('test.wav',s,fs,'BitsPerSample',16); % saving the sound file
 %%
-[l, f] = import_sound('test.wav');
+[l, f] = import_sound('test.wav'); % loading the sound file
 %%
-figure(7)
+figure(7) % plotting the sound file with the original
 hold on
 plot(t,s);
 plot(t,l);
+title('A signal before and after being saved and loaded');
 hold off
 
+% Oh boy, that sure is some cutoff
+
+%%
+
+[t,s] = generate_sinusoid(1,10,0,50,0.2);
+y = conv(ones(5,1),s(:))
+
+figure(8)
+subplot(2,1,1)
+plot(t,s)
+title('sinusoid with f = 10Hz');
+subplot(2,1,2)
+plot(0:length(y)-1,y)
+title('sin');
 
 
