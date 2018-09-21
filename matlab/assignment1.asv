@@ -27,23 +27,19 @@ f0 = 25;
 phi = pi/3;
 fs = 5000;
 T_s = 0.1;
-[t, s0] = generate_sinusoid(1, f0, k*phi, fs, T_s);
-s = s0;
+[t, s] = generate_sinusoid(1, f0, k*phi, fs, T_s);
+s0 = s;
 % cos(2*pi * 2^k * f0 * t + k * pi/3) f0 = 25
 for k = 0:N
-    [t, s0] = generate_sinusoid(1, f0*2^k, k*phi, fs, T_s);
-    s = s0 + s;
+    [t, s] = generate_sinusoid(1, f0*2^k, k*phi, fs, T_s);
+    s0 = s0 + s;
 end
 
 t = ones(1,length(t))*0.8 + t;
 
 figure(1)
-plot(t,s);
+plot(t,s0);
 
 % part 2
 
-[Y, F] = make_spectrum(s, fs);
-figure(1)
-plot(F,Y);
-xlim([-length(Y), length(Y)]);
-
+[Y, F] = make_spe
