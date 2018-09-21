@@ -27,11 +27,12 @@ f0 = 25;
 phi = pi/3;
 fs = 5000;
 T_s = 0.1;
+k = 0;
 [t, s0] = generate_sinusoid(1, f0, k*phi, fs, T_s);
 s = s0;
 % cos(2*pi * 2^k * f0 * t + k * pi/3) f0 = 25
-for k = 0:N
-    [t, s0] = generate_sinusoid(1, f0*2^k, k*phi, fs, T_s);
+for k = 1:N
+    [t, s0] = generate_sinusoid(1, f0*2^k, k*phi-1/pi, fs, T_s);
     s = s0 + s;
 end
 
@@ -44,6 +45,48 @@ plot(t,s);
 
 [Y, F] = make_spectrum(s, fs);
 figure(1)
-plot(F,Y);
+subplot(2,1,1)
+plot(F,20*log10(abs(Y)));
 xlim([-length(Y), length(Y)]);
+title('Magnitude [dB]');
+grid();
+
+
+subplot(2,1,2)
+plot(F,phase(Y));
+xlim([-length(Y), length(Y)]);
+ylim([0 4*pi]);
+title('Phase');
+yticks(0:pi:4*pi);
+yticklabels({'0','\pi','2\pi','3\pi','4\pi'});
+grid();
+
+figure(2)
+subplot(2,1,1)
+plot(F,real(Y));
+xlim([-length(Y), length(Y)]);
+title('Real part');
+grid();
+
+subplot(2,1,2)
+plot(F,imag(Y));
+xlim([-length(Y), length(Y)]);
+title('Imaginary part');
+grid();
+
+%% part 3
+figure(3)
+semilogx(F,20*log10(abs(Y)));
+xlim([0 length(F)/2]);
+grid()
+%%
+audiowrite('test.wav',Y,fs,'BitsPerSample',16);
+[l, f] = importSound('test.wav');
+%%
+figure(4)
+hold on
+plot(t,s);
+plot(0.85:,l);
+hold off
+
 
