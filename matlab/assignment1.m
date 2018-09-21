@@ -1,24 +1,39 @@
 %% 1.1
 n = 2^11;
 fs = 2*n;
-[T, S] = generateSignal(1, 500, 0, fs, 0.5); 
+[T1, S1] = generateSignal(1, 500, 0, fs, 0.5); 
+[T2, S2] = generateSignal(1, 499, 0, fs, 0.5); 
 
-[y, F] = make_spectrum(S,fs);
+[y1, F1] = make_spectrum(S1,fs);
+[y2, F2] = make_spectrum(S2,fs);
 
-y_dB = 20*log10(abs(y));
+y1_dB = 20*log10(abs(y1));
+y2_dB = 20*log10(abs(y2));
 
 figure(1)
-plot(F,y_dB);
-xlim([-length(y), length(y)]);
-figure(2)
-plot(F,real(y));
-xlim([-length(y), length(y)]);
-figure(3)
-plot(F,imag(y));
-xlim([-length(y), length(y)]);
-figure(4)
-plot(F,angle(y));
-xlim([-length(y), length(y)]);
+hold on
+plot(F1,y1_dB);
+plot(F2,y2_dB);
+hold off
+xlim([-length(y1), length(y1)]);
+title('Magnitude [dB]');
+
+% figure(2)
+% subplot(2,1,1)
+% hold on
+% plot(F1,real(y1));
+% plot(F2,real(y2));
+% hold off
+% xlim([-length(y1), length(y1)]);
+% title('Real part');
+% subplot(2,1,2)
+% hold on
+% plot(F1,imag(y1));
+% plot(F2,imag(y2));
+% hold off
+% xlim([-length(y1), length(y1)]);
+% title('Imaginary part');
+
 
 %% 1.2
 % part 1
@@ -38,13 +53,13 @@ end
 
 t = ones(1,length(t))*0.8 + t;
 
-figure(1)
+figure(3)
 plot(t,s);
 
 % part 2
 
 [Y, F] = make_spectrum(s, fs);
-figure(1)
+figure(4)
 subplot(2,1,1)
 plot(F,20*log10(abs(Y)));
 xlim([-length(Y), length(Y)]);
@@ -61,7 +76,7 @@ yticks(0:pi:4*pi);
 yticklabels({'0','\pi','2\pi','3\pi','4\pi'});
 grid();
 
-figure(2)
+figure(5)
 subplot(2,1,1)
 plot(F,real(Y));
 xlim([-length(Y), length(Y)]);
@@ -75,18 +90,23 @@ title('Imaginary part');
 grid();
 
 %% part 3
-figure(3)
+figure(6)
+hold on
 semilogx(F,20*log10(abs(Y)));
+plot(F(3+length(F)/2),2*log10(abs(Y(3))),'O');
+hold off
 xlim([0 length(F)/2]);
 grid()
 %%
-audiowrite('test.wav',Y,fs,'BitsPerSample',16);
-[l, f] = importSound('test.wav');
+audiowrite('test.wav',s,fs,'BitsPerSample',16);
 %%
-figure(4)
+[l, f] = import_sound('test.wav');
+%%
+figure(7)
 hold on
 plot(t,s);
-plot(0.85:,l);
+plot(t,l);
 hold off
+
 
 
