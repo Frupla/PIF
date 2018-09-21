@@ -19,3 +19,6 @@ xlim([-length(y), length(y)]);
 figure(4)
 plot(F,angle(y));
 xlim([-length(y), length(y)]);
+
+%% 1.2
+
