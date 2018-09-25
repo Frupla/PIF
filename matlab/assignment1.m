@@ -1,27 +1,17 @@
 %% 1.1
-<<<<<<< HEAD
-n = 2^11; % Number of samples should be a number of 2 in n'th for fft in make_spectrum
-fs = 2*n; % sampling frequency will be twice the number of n as it runs in only half a second
-=======
 fs = 2^12; % fft works in sets of 2^n, so fs should be set to be a multiple of 2 
-[T1, S1] = generate_signal(1, 500, 0, fs, 0.5); 
-[T2, S2] = generate_signal(1, 499, 0, fs, 0.5); 
-% A signal for 500Hz and 499 Hz is generated
->>>>>>> b3cce7e774ec00f3a80a55d2266d8810d0c9841b
 
 %generate sinusoids.
-[T1, S1] = generateSignal(1, 500, 0, fs, 0.5);  % one with 500 Hz
-[T2, S2] = generateSignal(1, 499, 0, fs, 0.5);  % one with 499 Hz
+[T1, S1] = generate_signal(1, 500, 0, fs, 0.5);  % one with 500 Hz
+[T2, S2] = generate_signal(1, 499, 0, fs, 0.5);  % one with 499 Hz
 
 [y1, F1] = make_spectrum(S1,fs); % make spectrums of both functions
-[y2, F2] = make_spectrum(S2,fs);
-% The signals are fourier transformed and shifted
+[y2, F2] = make_spectrum(S2,fs); % The signals are fourier transformed and shifted
 
 
 y1_dB = 20*log10(abs(y1)); % change scale to log10
-y2_dB = 20*log10(abs(y2));
-% the signals are turned into the decibel format
-% and plottet
+y2_dB = 20*log10(abs(y2)); % the signals are turned into the decibel format
+                           % and plottet 
 figure(1)
 hold off 
 hold on
@@ -39,7 +29,6 @@ plot(F2,y2_dB);
 hold off
 xlim([-length(y1), length(y1)]);
 title('Magnitude [dB]');
-<<<<<<< HEAD
 legend('500Hz','499Hz')
 
 figure(3)
@@ -57,10 +46,7 @@ plot(F2,imag(y2));
 hold off
 xlim([-length(y1), length(y1)]);
 title('Imaginary part');
-
-=======
 legend('500hz','499hz');
->>>>>>> b3cce7e774ec00f3a80a55d2266d8810d0c9841b
 
 %% 1.2
 % part 1
