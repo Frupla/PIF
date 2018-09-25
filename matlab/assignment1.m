@@ -1,38 +1,51 @@
 %% 1.1
-n = 2^11;
-fs = 2*n;
-[T1, S1] = generateSignal(1, 500, 0, fs, 0.5); 
-[T2, S2] = generateSignal(1, 499, 0, fs, 0.5); 
+n = 2^11; % Number of samples should be a number of 2 in n'th for fft in make_spectrum
+fs = 2*n; % sampling frequency will be twice the number of n as it runs in only half a second
 
-[y1, F1] = make_spectrum(S1,fs);
+%generate sinusoids.
+[T1, S1] = generateSignal(1, 500, 0, fs, 0.5);  % one with 500 Hz
+[T2, S2] = generateSignal(1, 499, 0, fs, 0.5);  % one with 499 Hz
+
+[y1, F1] = make_spectrum(S1,fs); % make spectrums of both functions
 [y2, F2] = make_spectrum(S2,fs);
 
-y1_dB = 20*log10(abs(y1));
+y1_dB = 20*log10(abs(y1)); % change scale to log10
 y2_dB = 20*log10(abs(y2));
 
 figure(1)
+hold off 
+hold on
+plot(T1,S1);
+plot(T2,S2);
+hold off
+xlim([0.49, 0.5]);
+title('Magnitude [dB]');
+legend('500Hz','499Hz')
+
+figure(2)
 hold on
 plot(F1,y1_dB);
 plot(F2,y2_dB);
 hold off
 xlim([-length(y1), length(y1)]);
 title('Magnitude [dB]');
+legend('500Hz','499Hz')
 
-% figure(2)
-% subplot(2,1,1)
-% hold on
-% plot(F1,real(y1));
-% plot(F2,real(y2));
-% hold off
-% xlim([-length(y1), length(y1)]);
-% title('Real part');
-% subplot(2,1,2)
-% hold on
-% plot(F1,imag(y1));
-% plot(F2,imag(y2));
-% hold off
-% xlim([-length(y1), length(y1)]);
-% title('Imaginary part');
+figure(3)
+subplot(2,1,1)
+hold on
+plot(F1,real(y1));
+plot(F2,real(y2));
+hold off
+xlim([-length(y1), length(y1)]);
+title('Real part');
+subplot(2,1,2)
+hold on
+plot(F1,imag(y1));
+plot(F2,imag(y2));
+hold off
+xlim([-length(y1), length(y1)]);
+title('Imaginary part');
 
 
 %% 1.2
