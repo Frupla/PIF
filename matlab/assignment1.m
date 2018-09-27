@@ -60,7 +60,7 @@ k = 0;
 [t, s0] = generate_sinusoid(1, f0, k*phi, fs, T_s);
 s = s0;
 for k = 1:N
-    [t, s0] = generate_sinusoid(1, f0*2^k, k*phi-1/pi, fs, T_s);
+    [t, s0] = generate_sinusoid(1, f0*2^k, k*phi-pi/2, fs, T_s); % - pi/2 to make it cos
     s = s0 + s;
 end
 
@@ -79,19 +79,19 @@ title(str,'Interpreter','latex')
 
 figure(4) % Magnitude and phase
 subplot(2,1,1)
-plot(F,20*log10(abs(Y)));
+plot(F,abs(Y));
 xlim([-length(Y), length(Y)]);
-title('Magnitude [dB]');
+title('Magnitude');
 grid();
 
 
 subplot(2,1,2)
 plot(F,phase(Y));
 xlim([-length(Y), length(Y)]);
-ylim([0 4*pi]);
+ylim([-6*pi 2*pi]);
 title('Phase');
-yticks(0:pi:4*pi);
-yticklabels({'0','\pi','2\pi','3\pi','4\pi'});
+yticks(-6*pi:pi:pi);
+yticklabels({'-6\pi','-5\pi','-4\pi','-3\pi','-2\pi','\pi','0','\pi','2\pi'});
 grid();
 
 figure(5) % Real and imaginary part
