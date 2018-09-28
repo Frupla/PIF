@@ -130,15 +130,129 @@ hold off
 
 % Oh boy, that sure is some cutoff
 
-%%
+%% Hand in 2, 1.3
+fs = 10000;
+N = 21;
+t = 0:1/fs:0.1-1/fs;
+%An order 21 moving average filter:
+train = zero_pad(t,ones(1,N)/N); 
+%3 sinosoids
+[t1,s1] = generate_sinusoid(1,500,0,fs,1);
+[t2,s2] = generate_sinusoid(1,2200,0,fs,1);
+[t3,s3] = generate_sinusoid(1,4050,0,fs,1);
+
+%All four signals, plotted together
+figure(4)
+subplot(2,2,1)
+hold on
+plot(t,train,'Color','g','LineWidth',1);
+plot(t1,s1,'Color','m','LineWidth',1);
+plot(t2,s2,'Color','r','LineWidth',1);
+plot(t3,s3,'Color','b','LineWidth',1);
+xlim([0,0.005]);
+title('Impulse response of an order 21 moving average plottet with 3 sinosoids') 
+legend('h_{21}(t)','f_1(t)','f_2(t)','f_3(t)')
+hold off
+
+%f1 convolved with the train
+subplot(2,2,2)
+s1c = conv(train,s1); 
+plot(t,train,'Color','g','LineWidth',1);
+hold on
+plot(t1,s1,'Color','m','LineWidth',1);
+plot(t1,s1c(1:length(t1)),'LineWidth',1);
+xlim([0,0.005]);
+title('f_1 convolved with impulse response')
+legend('h_{21}(t)','f_1(t)','h_{21}(t) * f_1(t)');
+hold off
+
+%f2 convolved with the train
+subplot(2,2,3)
+s2c = conv(train,s2);
+plot(t,train,'Color','g','LineWidth',1);
+hold on
+plot(t2,s2,'Color','r','LineWidth',1);
+plot(t2,s2c(1:length(t2)),'LineWidth',1);
+title('f_2 convolved with impulse response')
+legend('h_{21}(t)','f_2(t)','h_{21}(t) * f_2(t)');
+xlim([0,0.005]);
+hold off
+
+%f3 convolved with the train
+subplot(2,2,4)
+s3c = conv(train,s3);
+plot(t,train,'Color','g','LineWidth',1);
+hold on
+plot(t3,s3,'Color','b','LineWidth',1);
+plot(t3,s3c(1:length(t3)),'LineWidth',1);
+title('f_1 convolved with impulse response')
+legend('h_{21}(t)','f_3(t)','h_{21}(t) * f_3(t)');
+xlim([0,0.005]);
+hold off
+
+%Matlab's filter function is  implemented for and order 21 moving average
+%filter
+A = 1;
+B = 1/21*[ones(21,1)];
+sf1 = filter(B,A,s1);
+sf2 = filter(B,A,s2);
+sf3 = filter(B,A,s3);
+
+figure(8)
+s1c = conv(train,s1);
+%plot(t,train,'Color','g','LineWidth',2);
+%plot(t1,s1,'Color','m','LineWidth',6);
+plot(t1(1:100),s1(1:100),'Color','b','LineWidth',2);
+hold on
+xlim([0,0.01]);
+%title('f_1 convolved with impulse response')
+plot(t1,s1c(1:length(t1)),'Color','m','LineWidth',6);
+hold on
+plot(t1(1:100),sf1(1:100),'Color','k','LineWidth',2)
+%plot(t1,s1c(1:length(t1)),'Color','m','LineWidth',6);
+legend('f_1(t)','f_1(t) * h_21(t)','filter(1/21*[ones(21,1)],1,f_1)');
+hold off
+
+figure(9)
+s2c = conv(train,s2);
+%plot(t,train,'Color','g','LineWidth',2);
+%plot(t1,s1,'Color','m','LineWidth',6);
+plot(t2(1:100),s2(1:100),'Color','b','LineWidth',2);
+hold on
+xlim([0,0.01]);
+%title('f_1 convolved with impulse response')
+plot(t2,s2c(1:length(t1)),'Color','m','LineWidth',6);
+plot(t2(1:100),sf2(1:100),'Color','k','LineWidth',2)
+%plot(t1,s1c(1:length(t1)),'Color','m','LineWidth',6);
+legend('f_2(t)','f_2(t) * h_21(t)','filter(1/21*[ones(21,1)],1,f_2)');
+hold off
+
+figure(10)
+s3c = conv(train,s3);
+%plot(t,train,'Color','g','LineWidth',2);
+%plot(t1,s1,'Color','m','LineWidth',6);
+plot(t3(1:100),s3(1:100),'Color','b','LineWidth',2);
+hold on
+xlim([0,0.01]);
+title('Comparison between the homemade filter and the matlab filter function')
+plot(t3,s3c(1:length(t3)),'Color','m','LineWidth',6);
+plot(t3(1:100),sf3(1:100),'Color','k','LineWidth',2)
+%plot(t1,s1c(1:length(t1)),'Color','m','LineWidth',6);
+legend('f_3(t)','f_3(t) * h_21(t)','filter(1/21*[ones(21,1)],1,f_3)');
+xlabel('time [s]') 
+ylabel('amplitude')
+hold off
+
+%% In the following part another sinosoid is generated:
 f = 200;
 fs = 500;
-[t,s] = generate_sinusoid(1,f,0,fs,0.2);
-y = conv(ones(5,1),s(:));
+[t,s] = generate_sinusoid(1,f,0,fs,0.2); 
+y = conv(ones(5,1),s(:)); %An order 5 running sum filter is generated and convolved with the sinosoid
+
 
 figure(8)
 subplot(2,1,1)
-plot(t,s)
+plot(t,s) % the sinoid is plotted alone
 %title('sinusoid with f = 10Hz');
 
 subplot(2,1,2)
