@@ -53,14 +53,13 @@ legend('500hz','499hz');
 N = 4; % initialisation of variables
 f0 = 25;
 phi = pi/3;
-fs = 5000; 
-T_s = 0.1;
+fs = 10000; 
+T_s = 4;
 k = 0;
 % cos(2*pi * 2^k * f0 * t + k * pi/3):
-[t, s0] = generate_sinusoid(1, f0, k*phi, fs, T_s);
-s = s0;
-for k = 1:N
-    [t, s0] = generate_sinusoid(1, f0*2^k, k*phi-1/pi, fs, T_s);
+s = 0;
+for k = 0:N
+    [t, s0] = generate_sinusoid(1, f0*2^k, k*phi+pi/2, fs, T_s); % - pi/2 to make it cos
     s = s0 + s;
 end
 
@@ -69,6 +68,7 @@ t = ones(1,length(t))*0.8 + t; % time vector is changed into [0.8, 0.9]
 figure(3)
 plot(t,s); % Plotting the sinsusoid
 % Using mad matlab skillz to make a title with a sum sign in it:
+xlim([0.8, 0.9]);
 str = '$$ s(n)=\sum^{4}_{k=0} cos\left(2\pi\cdot2^{k}f_{0}\cdot t + k \cdot \frac{\pi}{3}\right) $$';
 title(str,'Interpreter','latex') 
 
@@ -79,42 +79,42 @@ title(str,'Interpreter','latex')
 
 figure(4) % Magnitude and phase
 subplot(2,1,1)
-plot(F,20*log10(abs(Y)));
-xlim([-length(Y), length(Y)]);
-title('Magnitude [dB]');
+plot(F,abs(Y));
+xlim([-500,500]);
+title('Magnitude');
 grid();
 
 
 subplot(2,1,2)
-plot(F,phase(Y));
-xlim([-length(Y), length(Y)]);
-ylim([0 4*pi]);
+Yn = Y;
+Yn(abs(Y)<max(abs(Y))/10000)=0; % Reducing amount of noice
+plot(F,angle(Yn));
+xlim([-500,500]);
+%ylim([-6*pi 2*pi]);
 title('Phase');
-yticks(0:pi:4*pi);
-yticklabels({'0','\pi','2\pi','3\pi','4\pi'});
+%yticks(-6*pi:pi:pi);
+%yticklabels({'-6\pi','-5\pi','-4\pi','-3\pi','-2\pi','\pi','0','\pi','2\pi'});
 grid();
 
 figure(5) % Real and imaginary part
 subplot(2,1,1)
 plot(F,real(Y));
-xlim([-length(Y), length(Y)]);
+xlim([-500, 500]);
 title('Real part');
 grid();
 
 subplot(2,1,2)
 plot(F,imag(Y));
-xlim([-length(Y), length(Y)]);
+xlim([-500, 500]);
 title('Imaginary part');
 grid();
 
 %% part 3
 figure(6)
-hold on
+%subfigur(2,1,1);
 semilogx(F,20*log10(abs(Y))); % plotting the x axis logarithmically
-plot(F(3+length(F)/2),2*log10(abs(Y(3))),'O');
-hold off
 title('First peak');
-xlim([0 length(F)/2]);
+xlim([0 500]);
 grid()
 %% Part 4
 audiowrite('test.wav',s,fs,'BitsPerSample',16); % saving the sound file
@@ -122,11 +122,18 @@ audiowrite('test.wav',s,fs,'BitsPerSample',16); % saving the sound file
 [l, f] = import_sound('test.wav'); % loading the sound file
 %%
 figure(7) % plotting the sound file with the original
-hold on
-plot(t,s);
-plot(t,l);
-title('A signal before and after being saved and loaded');
-hold off
+subplot(2,1,1);
+plot(t(1:1000),s(1:1000));
+xlim([0.8,0.925]);
+grid();
+title('A signal before being saved and loaded, from 0.8s to 0.9s');
+
+subplot(2,1,2);
+plot(t(501:1250),l(501:1250));
+ylim([-5,5]);
+xlim([0.8,0.925]);
+grid();
+title('A signal after being saved and loaded, from 0.85s to 0.925s');
 
 % Oh boy, that sure is some cutoff
 
