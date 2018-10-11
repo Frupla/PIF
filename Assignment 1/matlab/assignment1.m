@@ -1,3 +1,4 @@
+%%Please note that to use the toolbox, you must run each segment individually
 %% 1.1
 fs = 2^12; % fft works in sets of 2^n, so fs should be set to be a multiple of 2 
 
@@ -118,8 +119,10 @@ xlim([0 500]);
 grid()
 %% Part 4
 audiowrite('test.wav',s,fs,'BitsPerSample',16); % saving the sound file
+% Make sure to be in the subfolder sounds when you run this
 %%
 [l, f] = import_sound('test.wav'); % loading the sound file
+% You will have to change the path in import_sound to use this function
 %%
 figure(7) % plotting the sound file with the original
 subplot(2,1,1);
@@ -142,7 +145,8 @@ fs = 10000;
 N = 21;
 t = 0:1/fs:0.1-1/fs;
 %An order 21 moving average filter:
-train = zero_pad(t,ones(1,N)/N); 
+%h = 1/N.*ones(1,N);
+train = zero_pad(t,ones(1,N)/N);
 %3 sinosoids
 [t1,s1] = generate_sinusoid(1,500,0,fs,1);
 [t2,s2] = generate_sinusoid(1,2200,0,fs,1);
@@ -267,3 +271,4 @@ plot(0:length(y)-1,y)
 title('convoluted sinusoid');
 
 
+%% 

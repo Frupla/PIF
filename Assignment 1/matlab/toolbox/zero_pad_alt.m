@@ -1,5 +1,5 @@
-function s = zero_pad(vector1, vector2)
-if(isrow(vector1) && isrow(vector(2)))
+function s = zero_pad_alt(vector1, vector2)
+if(isrow(vector1) && isrow(vector2))
     if(length(vector1) <= length(vector2))
         s = [vector1 zeros(1, length(vector2)-length(vector1))];
     else
