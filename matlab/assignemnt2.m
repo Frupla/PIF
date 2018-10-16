@@ -1,3 +1,5 @@
+%% Pelles rod ;)
+
 omegac = 12.5; %Cutoff freq
 omegas = 35;
 nq = omegas/2; % nyquist freq
@@ -9,8 +11,24 @@ freqz(b,a)
 Wp = 10/nq;  %Passband
 Ws = 15/nq;  %Stopband
 
-[n,Wn] = buttord(Wp,Ws,2,20)
+[n,Wn] = buttord(Wp,Ws,2,20);
 
+
+
+
+
+
+
+[B,A] = butter(n,Wn);
+
+%plot mag anf phase
+figure(1)   
+freqz(B,A)
+%make z-plane 
+figure(2)
+zplane(B,A)
+
+%% Plot without normalization
 [z,p,k] = butter(n,Wn);
 sos = zp2sos(z,p,k);
 
