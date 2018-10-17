@@ -80,6 +80,8 @@ title(str,'Interpreter','latex')
 
 [Y, F] = make_spectrum(s, fs); % Making a spectrum for the signal from before
 
+
+
 figure(4) % Magnitude and phase
 subplot(2,1,1)
 plot(F,abs(Y));
@@ -99,6 +101,8 @@ title('Phase');
 %yticklabels({'-6\pi','-5\pi','-4\pi','-3\pi','-2\pi','\pi','0','\pi','2\pi'});
 grid();
 
+draw_phase_and_mag(7,s,fs)
+%%
 figure(5) % Real and imaginary part
 subplot(2,1,1)
 plot(F,real(Y));
