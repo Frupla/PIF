@@ -30,6 +30,17 @@ freqz(B,A)
 %make z-plane 
 figure(2)
 zplane(B,A)
+figure(3)
+bode(tf(B,A)*tf(A,B))
+figure(4)
+zplane(A,B)
+
+%% 
+figure(5)
+bode(tf(B,A)*tf(B,A)*tf(B,A))
+
+
+
 
 
 % 1.2
