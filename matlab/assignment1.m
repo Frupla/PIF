@@ -118,8 +118,10 @@ xlim([0 500]);
 grid()
 %% Part 4
 audiowrite('test.wav',s,fs,'BitsPerSample',16); % saving the sound file
+% save the file, you should be in the subfolder sounds
 %%
 [l, f] = import_sound('test.wav'); % loading the sound file
+% You will have to change the path of import_sound for this to work
 %%
 figure(7) % plotting the sound file with the original
 subplot(2,1,1);
