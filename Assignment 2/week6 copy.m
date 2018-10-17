@@ -36,9 +36,13 @@ figure(4)
 zplane(A,B)
 
 %% 
-figure(5)
-bode(tf(B,A)*tf(B,A)*tf(B,A))
+figure(1)
+bode(tf(B,A)*tf(B,A)^(-1))
 
+figure(3)
+bode(tf(B,A))
+figure(4)
+bode(tf(B,A)*tf(B,A))
 
 
 
