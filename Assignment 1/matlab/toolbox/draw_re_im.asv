@@ -1,0 +1,14 @@
+function draw_re_im(n,f,s)
+figure(n)
+
+subplot(2,1,1);
+plot(x,real(y));
+% xlim([-length(y), length(y)]);
+title('real part');
+
+subplot(2,1,2);
+plot(x,imag(y));
+% xlim([-length(y), length(y)]);
+title('imaginary part');
+
+end

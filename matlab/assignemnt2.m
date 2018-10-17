@@ -36,3 +36,10 @@ freqz(sos,512,35)
 title(sprintf('n = %d Butterworth Lowpass Filter',n))
 xlabel(subplot(2,1,1),'Omega')
 xlabel(subplot(2,1,2),'Omega')
+
+
+%%
+
+foo(1,1)
+foo(1)
+

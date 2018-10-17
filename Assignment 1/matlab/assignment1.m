@@ -31,23 +31,25 @@ hold off
 xlim([-length(y1), length(y1)]);
 title('Magnitude [dB]');
 legend('500Hz','499Hz')
-
+%%
 figure(3)
 subplot(2,1,1)
-hold on
-plot(F1,real(y1));
+% hold on
+% plot(F1,real(y1));
 plot(F2,real(y2));
-hold off
+% hold off
 xlim([-length(y1), length(y1)]);
 title('Real part');
 subplot(2,1,2)
-hold on
-plot(F1,imag(y1));
+% hold on
+% plot(F1,imag(y1));
 plot(F2,imag(y2));
-hold off
+% hold off
 xlim([-length(y1), length(y1)]);
 title('Imaginary part');
 legend('500hz','499hz');
+%%
+draw_re_im(10,F2,y2);
 
 %% 1.2
 % part 1
