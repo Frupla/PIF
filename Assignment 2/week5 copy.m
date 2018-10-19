@@ -139,10 +139,10 @@ h1 = b1;
 %Transfer function of first function:
 zeros1 = roots(b1);
 poles1 = roots(a1);
-H1 = zeros1/1;
+H1 = zeros1/1
 figure(1)
 zplane(zeros1,poles1)
 figure(2)
-freqz(zeros1,poles1)
+freqz(poly(zeros1),poly(poles1))
 % ok, this isn't quite right.... return to it later.
  

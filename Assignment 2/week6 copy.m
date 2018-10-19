@@ -14,34 +14,35 @@
 fs = 2*35/(2*pi); % 4 the siutable sampling freq.
 Gp = 2;
 Gs = 11;
-wp = 10/(2*pi*fs);%normalize
+wp = 10/(2*pi*fs);%normalize 
 ws = 15/(2*pi*fs);%normalize
 
-%Use butter and buttord - preferably like done in lecture
-
-[n,Wn]=buttord(wp,ws,Gp,Gs); %pre-warping and biletaral transform is included in the funciton, look at def to find out.
-
+[n,Wn]=buttord(wp,ws,Gp,Gs); %pre-warping and biletaral transform is included in the funciton, look at defintion to find out.
 
 [B,A] = butter(n,Wn);
 
-%plot mag anf phase
+%plot mag and phase
 figure(1)   
 freqz(B,A)
 %make z-plane 
 figure(2)
 zplane(B,A)
+
+%% Plot without normalization
+[z,p,k] = butter(n,Wn);
+sos = zp2sos(z,p,k);
+
 figure(3)
+freqz(sos,510,2*35)
+title(sprintf('n = %d Butterworth Lowpass Filter',n))
+xlabel(subplot(2,1,1),'Omega')
+xlabel(subplot(2,1,2),'Omega')
+
+%% 1.2
+figure(10)
 bode(tf(B,A)*tf(A,B))
-figure(4)
+figure(11)
 zplane(A,B)
 
-%% 
-figure(5)
+figure(12)
 bode(tf(B,A)*tf(B,A)*tf(B,A))
-
-
-
-
-
-% 1.2
-
