@@ -1,5 +1,5 @@
 function [time_vector, signal] = generate_sinusoid(a, f, phi, fs, T)
-% Input: a, f, phi, fs, t
+% Input: a, f, phi, fs, T
 % This function returns two vectors t (time vector) and s (signal vector)
 % It generates a sinusoid signal with the following parameters
 % a * sin(2*pi*f*t + phi)

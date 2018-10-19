@@ -27,6 +27,23 @@ freqz(B,A)
 %make z-plane 
 figure(2)
 zplane(B,A)
+<<<<<<< HEAD
+=======
+figure(3)
+bode(tf(B,A)*tf(A,B))
+figure(4)
+zplane(A,B)
+
+%% 
+figure(1)
+bode(tf(B,A)*tf(B,A)^(-1))
+
+figure(3)
+bode(tf(B,A))
+figure(4)
+bode(tf(B,A)*tf(B,A))
+
+>>>>>>> 9270b032f857950b04d026f6689831f2cf160eb9
 
 %% Plot without normalization
 [z,p,k] = butter(n,Wn);
