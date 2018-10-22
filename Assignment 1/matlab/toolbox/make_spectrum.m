@@ -1,5 +1,6 @@
 function [Y, freq] = make_spectrum(signal, fs)
-    
+% Takes signal in time domain, and the sampling frequency of signal, fs,
+% and returns the function in the frequency domain
 
 Y = fftshift(fft(signal)); % fft is a fast algortihm and needs fftshift to 
                            % sort from minimum negative freq to positive

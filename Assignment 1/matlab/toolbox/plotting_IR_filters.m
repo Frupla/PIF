@@ -1,13 +1,7 @@
-function [figure_handle] = draw_phase_and_mag(n,signal,fs)
+function plotting_IR_filters(n,signal,fs,type,delay)
 
 
-figure_handle = n;
-%make the figure
 figure(n);
-%set size
-set(n,'paperunits','centimeters','Paperposition',[0 0 10 4]);
-%set fontsize
-set(gca,'Fontsize',10);
 
 
 %The actual plot
@@ -15,9 +9,9 @@ subplot(2,1,1)
 [Y, F] = make_spectrum(signal, fs);
 h1=plot(F,abs(Y));
 xlim([-length(Y)/2,length(Y)/2]);
-title('Magnitude');
+title(strcat('Magnitude ',type));
 set(h1,'linewidth',1);
-xlabel('frequency [Hz]');
+xlabel(strcat('frequency [Hz], delay = ',delay));
 ylabel('amplitude');
 grid();
 
