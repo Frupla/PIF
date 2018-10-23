@@ -11,39 +11,35 @@
 
 % 1. This should be a butterwirth filter
 
-fs = 2*35/(2*pi); % 4 the siutable sampling freq.
+fs = 2*35; % the suitable sampling frequency is 2x the nyquist frequence
 Gp = 2;
 Gs = 11;
-wp = 10/(2*pi*fs);%normalize 
-ws = 15/(2*pi*fs);%normalize
+wp = 10/fs;%normalize 
+ws = 15/fs;%normalize
 
-[n,Wn]=buttord(wp,ws,Gp,Gs); %pre-warping and biletaral transform is included in the funciton, look at defintion to find out.
-
+[n,Wn]=buttord(wp,ws,Gp,Gs); %pre-warping and biletaral transform is 
+                             %included in the funciton
 [B,A] = butter(n,Wn);
 
 %plot mag and phase
 figure(1)   
 freqz(B,A)
+title('4th Order Lowpass Butterwoth Filter');
+fig = gcf;
+axes = get(fig,'children');
+set(axes,'FontSize',12);
+mag = get(axes(1),'children');
+phase = get(axes(2),'children');
+set(mag,'linewidth',1);
+set(phase,'linewidth',1);
+
 %make z-plane 
 figure(2)
 zplane(B,A)
-<<<<<<< HEAD
-=======
-figure(3)
-bode(tf(B,A)*tf(A,B))
-figure(4)
-zplane(A,B)
+fig = gcf;
+axes = get(fig,'children');
+set(axes,'FontSize',12);
 
-%% 
-figure(1)
-bode(tf(B,A)*tf(B,A)^(-1))
-
-figure(3)
-bode(tf(B,A))
-figure(4)
-bode(tf(B,A)*tf(B,A))
-
->>>>>>> 9270b032f857950b04d026f6689831f2cf160eb9
 
 %% Plot without normalization
 [z,p,k] = butter(n,Wn);
@@ -56,10 +52,23 @@ xlabel(subplot(2,1,1),'Omega')
 xlabel(subplot(2,1,2),'Omega')
 
 %% 1.2
+
+tf(B,A)*tf(A,B)
+B1 = [0.00226 0.002964 -0.00428 -0.004723 0.004688 0.003193 -0.002608 -0.0007802 0.000595];
+
 figure(10)
-bode(tf(B,A)*tf(A,B))
+freqz(B1,B1)
+
 figure(11)
-zplane(A,B)
+zplane(B1,B1)
 
 figure(12)
-bode(tf(B,A)*tf(B,A)*tf(B,A))
+bode(tf(B,A)*tf(B,A))
+%% 
+figure(13)
+bode(tf(B,A)*tf(B,A)^(-1))
+
+figure(14)
+bode(tf(B,A))
+figure(15)
+bode(tf(B,A)*tf(B,A))
