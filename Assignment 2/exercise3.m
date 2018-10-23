@@ -44,30 +44,32 @@ ti3 = 0:1/f:length(IIR3)/f-1/f;
 
 % figure(3)
 % plot(s)
-% ylim([-2 2])
+% ylim([-1 1])
 % xlim([0 length(s)])
 % grid();
 
 figure(1)
 subplot(3,1,1);
-plot(tf1,FIR1);
+plot(tf1,FIR1, 'linewidth', 2);
 title('FIR');
 xlim([0 0.03])
-ylim([-2 2])
+ylim([-1 1])
 xlabel('time [s], delay = 10ms');
 ylabel('magnitude');
 grid();
+
 subplot(3,1,2);
-plot(tf2,FIR2);
+plot(tf2,FIR2, 'linewidth', 2);
 xlim([0 0.05])
-ylim([-2 2])
+ylim([-1 1])
 xlabel('time [s], delay = 30ms');
 ylabel('magnitude');
 grid();
+
 subplot(3,1,3);
-plot(tf3,FIR3);
+plot(tf3,FIR3, 'linewidth', 2);
 xlim([0 0.3])
-ylim([-2 2])
+ylim([-1 1])
 xlabel('time [s], delay = 200ms');
 ylabel('magnitude');
 grid();
@@ -75,24 +77,26 @@ grid();
 
 figure(2)
 subplot(3,1,1);
-plot(ti1,IIR1);
+plot(ti1,IIR1, 'linewidth', 2);
 title('IIR');
 xlim([0 6*T1])
-ylim([-2 2])
+ylim([-1 1])
 xlabel('time [s], delay = 10ms');
 ylabel('magnitude');
 grid();
+
 subplot(3,1,2);
-plot(ti2,IIR2);
+plot(ti2,IIR2, 'linewidth', 2);
 xlim([0 6*T2])
-ylim([-2 2])
+ylim([-1 1])
 xlabel('time [s], delay = 30ms');
 ylabel('magnitude');
 grid();
+
 subplot(3,1,3);
-plot(ti3,IIR3);
+plot(ti3,IIR3, 'linewidth', 2);
 xlim([0 1])
-ylim([-2 2])
+ylim([-1 1])
 xlabel('time [s], delay = 200ms');
 ylabel('magnitude');
 grid();
@@ -116,4 +120,15 @@ plotting_IR_filters(8,FIR3,f,' (FIR)',' 200ms');
 plotting_IR_filters(9,IIR3,f,' (IIR)',' 200ms');
 %%
 
-[Y,F]=make_spectrum(IIR1,fs)
+[Y,F] = make_spectrum(IIR1,fs)
+
+
+%%
+
+tf([A1'],[B1'])
+tf([B1'],[A1'])
+
+
+
+
+

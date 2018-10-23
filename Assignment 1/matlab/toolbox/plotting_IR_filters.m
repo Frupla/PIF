@@ -10,7 +10,7 @@ subplot(2,1,1)
 h1=plot(F,abs(Y));
 xlim([-length(Y)/2,length(Y)/2]);
 title(strcat('Magnitude ',type));
-set(h1,'linewidth',1);
+set(h1,'linewidth',2);
 xlabel(strcat('frequency [Hz], delay = ',delay));
 ylabel('amplitude');
 grid();
@@ -21,7 +21,7 @@ Yn(abs(Y)<max(abs(Y))/10000)=0; % Reducing amount of noice
 h2=plot(F,angle(Yn));
 xlim([-length(Y)/2,length(Y)/2]);
 title('phase');
-set(h2,'linewidth',1);
+set(h2,'linewidth',2);
 xlabel('frequency [Hz]');
 ylabel('phase angle [\pi]');
 grid();

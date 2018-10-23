@@ -58,14 +58,14 @@ xlabel('time [s], delay = 10ms');
 ylabel('magnitude');
 grid();
 subplot(3,1,2);
-plot(tf1,FIR2);
+plot(tf2,FIR2);
 xlim([0 0.05])
 ylim([-2 2])
 xlabel('time [s], delay = 30ms');
 ylabel('magnitude');
 grid();
 subplot(3,1,3);
-plot(tf1,FIR3);
+plot(tf3,FIR3);
 xlim([0 0.3])
 ylim([-2 2])
 xlabel('time [s], delay = 200ms');
@@ -106,6 +106,25 @@ sound(s2,f)
 
 %%
 
-make_spectrum(
+plotting_IR_filters(4,FIR1,f,' (FIR)',' 10ms');
+plotting_IR_filters(5,IIR1,f,' (IIR)',' 10ms');
+
+plotting_IR_filters(6,FIR2,f,' (FIR)',' 30ms');
+plotting_IR_filters(7,IIR2,f,' (IIR)',' 30ms');
+
+plotting_IR_filters(8,FIR3,f,' (FIR)',' 200ms');
+plotting_IR_filters(9,IIR3,f,' (IIR)',' 200ms');
+%%
+
+[Y,F]=make_spectrum(IIR1,fs)
+
+
+%%
+
+tf([A],[B])
+tf([B],[A])
+
+
+
 
 
