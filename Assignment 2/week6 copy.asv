@@ -12,13 +12,13 @@
 % 1. This should be a butterwirth filter
 
 fs = 2*35; % the suitable sampling frequency is 2x the nyquist frequence
-Gp = 2;  % passband maximum attenuation
-Gs = 11; % Stopband minimum attenuation
+Gp = 2;  % passband maximum at
+Gs = 11; % Stopband minimum attenutation
 Op = 10; % omega max passband frequency [rad/sec]
 Os = 15; % omega min stopband frequency [rad/sec]
 
-wp = Op/fs;%normalize 
-ws = Os/fs;%normalize
+wp = 10/fs;%normalize 
+ws = 15/fs;%normalize
 
 [n,Wn]=buttord(wp,ws,Gp,Gs); %pre-warping and biletaral transform is 
                              %included in the funciton
