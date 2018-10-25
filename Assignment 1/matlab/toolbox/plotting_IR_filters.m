@@ -9,6 +9,7 @@ subplot(2,1,1)
 [Y, F] = make_spectrum(signal, fs);
 h1=plot(F,abs(Y));
 xlim([-length(Y)/2,length(Y)/2]);
+ylim([0 3*10^(-3)]);
 title(strcat('Magnitude ',type));
 set(h1,'linewidth',2);
 xlabel(strcat('frequency [Hz], delay = ',delay));
