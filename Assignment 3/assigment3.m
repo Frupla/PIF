@@ -1,6 +1,62 @@
 % Assigment 3
 
-%Ex 2
+%% filter=fiveInOne(0.1,0.2,0.3,0.4,0.5);
+%I FIR filtre er implus respons = B værdier
+filter=fiveInOne(20,15,10,5,0);
+figure(221)
+plot(filter)
+fig = gcf;
+
+figure(222)
+zplane(filter,1)
+fig = gcf;
+axes = get(fig,'children');
+set(axes,'FontSize',12);
+%Not sure what to make of this
+
+figure(223)
+freqz(filter) %frequncy response
+fig = gcf;
+axes = get(fig,'children');
+set(axes,'FontSize',12);
+mag = get(axes(1),'children');
+phase = get(axes(2),'children');
+set(mag,'linewidth',1);
+set(phase,'linewidth',1);
+title('Normalized frequncy response, 99th order five band equalizer');
+
+
+%%
+fil = zero_pad(ones(1,200),filter)
+figure(224)
+freqz(fil) %ferquncy responce of the zero padded one - it's the same, duh
+fig = gcf;
+axes = get(fig,'children');
+set(axes,'FontSize',12);
+mag = get(axes(1),'children');
+phase = get(axes(2),'children');
+set(mag,'linewidth',1);
+set(phase,'linewidth',1);
+title('Normalized frequncy response, 99th order five band equalizer,zero padded');
+%obv. it has no effect, why would it?
+
+[s,f] = importSound('Sweep.wav');
+
+ts=0:1/f:((length(s)/f)-1/f); 
+%time_vector = 0:1/fs:T_s-1/fs;
+figure(225)
+con=conv(s,filter);
+tc=0:1/f:((length(con)/f)-1/f); 
+plot(tc,con)
+hold on
+plot(ts,s)
+%%Left: plotting and explaining the spectrum
+%%
+con = conv(s,filter);
+figure(226)
+
+plot(t,con)
+%% Ex 2
 H = [1 1 1]*(1/3);
 figure(201)
 freqz(H,1);
@@ -40,11 +96,12 @@ x2=rho2*exp(j*theta2); %exp(-j*2.09 rad)
 % also 0.6665 rad/sample.
 
 % the suppressed frequency will be:
-% omega_{sup} = 0.6655 * \omega_{N} = 0.665* omega_{s}/2
-% f_sup = omega_{sup}*2*pi
+% f_{sup} = 0.6655 * f_{N} = 0.665* s_{s}/2
+% or f_{sup} = 2.0944 * f_{N} * 1/pi 
 % 
 %if T = 1s, fs = 1Hz and
-f_sup = 0.6665*2*pi*1; %4.1877 Hz
+f_sup = 0.6665*1; %0.6665 Hz
 
 % ASK ABOUT THIS!!!!
+
 
