@@ -50,7 +50,10 @@ tc=0:1/f:((length(con)/f)-1/f);
 plot(tc,con)
 hold on
 plot(ts,s)
-%%Left: plotting and explaining the spectrum
+%% Left: plotting and explaining the spectrum
+
+[Y, freq] = make_spectrum(con,f);
+
 %%
 con = conv(s,filter);
 figure(226)
@@ -96,12 +99,14 @@ x2=rho2*exp(j*theta2); %exp(-j*2.09 rad)
 % also 0.6665 rad/sample.
 
 % the suppressed frequency will be:
-% f_{sup} = 0.6655 * f_{N} = 0.665* s_{s}/2
+% f_{sup} = 0.6655 * f_{N} = 0.665* f_{s}/2
 % or f_{sup} = 2.0944 * f_{N} * 1/pi 
 % 
-%if T = 1s, fs = 1Hz and
-f_sup = 0.6665*1; %0.6665 Hz
+%if T = 1s, fs = 1Hz and f_N = 0.5HZ
+f_sup = 0.6665*0.5; %0.333333 Hz
 
 % ASK ABOUT THIS!!!!
+%%
+H = exp(1i*omega)*(1+cos(2*omega));
 
 
