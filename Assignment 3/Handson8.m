@@ -87,23 +87,34 @@ freqz(h10,t10)
 %% 1.2
 Fs = 30000;
 Ts = 1/Fs;
+n = 601;
+
+T0 = Ts/n;
+F0 = Fs/n;
 
 H = [ones(100,1);zeros(401,1);ones(100,1)];
-f = -(length(H)*Fs*10^(-7))/2:Fs*10^(-7):(length(H)*Fs*10^(-7)-Fs*10^(-7))/2;
-
+f = -length(H)*F0/2:F0:((length(H)-1)*F0/2);
 
 
 h = fftshift(ifft(H,'symmetric'));
-t = 0:Ts:(length(h)*Ts-Ts);
+t = 0:T0:(length(h)*T0-T0);
 
 
 figure(1)
 plot(t,h);
 title('Impulse response');
+grid();
+xlabel('Time [Currently unknown amounts of s]')
+ylabel('Magnitude [ ]')
+
 
 figure(2)
 plot(f,fftshift(H))
 title('Frequency response');
+grid();
+xlabel('Frequency [Hz]')
+ylabel('Magnitude [ ]')
+ylim([-0.1 1.1])
 
 
 %% Here I make the impulse response gradually shorter
