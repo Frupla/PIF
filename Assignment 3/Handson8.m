@@ -133,15 +133,15 @@ plot(f25,fftshift(angle(fft(h25))))
 plot(f10,fftshift(angle(fft(h10))))
 xlim([0 f(end)])
 hold off
-
+%%
 figure(2) % The lines need to be more thicc
 subplot(4,1,1)
 plot(t,h)
 subplot(4,1,2)
-plot(t,h50)
+plot(t(1:300),h50(1:300))
 subplot(4,1,3)
-plot(t,h25)
+plot(t(1:150),h25(1:150))
 subplot(4,1,4)
-plot(t,h10)
+plot(t(1:60),h10(1:60))
 
 
