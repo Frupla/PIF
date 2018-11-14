@@ -50,15 +50,181 @@ tc=0:1/f:((length(con)/f)-1/f);
 plot(tc,con)
 hold on
 plot(ts,s)
-%% Left: plotting and explaining the spectrum
+title('Sweep.wav')
+legend({'filtered frequency sweep','Frequency sweep'});
+xlabel('amplitude');
+ylabel('time[s]');
+set(findall(gcf,'-property','FontSize'),'FontSize',12);
+hold off
+%% Left: plotting and explaining the spectrum - here sweep
 
 [Y, freq] = make_spectrum(con,f);
 
-%%
-con = conv(s,filter);
+Y_db = 20*log10(abs(Y));
 figure(226)
+Y_mag = abs(Y);
+plot(freq,Y_mag)
 
-plot(t,con)
+figure(227)
+subplot(2,1,1)
+plot(freq,Y_db)
+%xlim([-25000,25000]);
+title('Frequency responce of filtered frequency sweep')
+ylabel('Magnitude[dB]');
+xlabel('Frequency[Hz]')
+grid();
+subplot(2,1,2)
+Yn = Y;
+%Yn(abs(Y)<max(abs(Y))/10000)=0; % Reducing amount of noice
+plot(freq,angle(Yn));
+%xlim([-500,500]);
+%ylim([-6*pi 2*pi]);
+ylabel('Phase[rad]');
+xlabel('Frequency[Hz]')
+set(findall(gcf,'-property','FontSize'),'FontSize',12);
+%yticks(-6*pi:pi:pi);
+%yticklabels({'-6\pi','-5\pi','-4\pi','-3\pi','-2\pi','\pi','0','\pi','2\pi'});
+grid();
+
+%% specturm of white noise
+
+x = rand(1,100000);  % 100 white noise samples,
+                  %   uniform between 0 and 1.
+xn = 2*(x-0.5);   % Make it uniform between -1 and +1
+
+f=40000; %some random sampling frequency 
+ts=0:1/f:((length(xn)/f)-1/f); 
+%time_vector = 0:1/fs:T_s-1/fs;
+figure(301)
+con=conv(xn,filter);
+tc=0:1/f:((length(con)/f)-1/f); 
+plot(tc,con)
+hold on
+plot(ts,xn)
+title('Randomly generated white noise with f_{s}=40000Hz')
+legend({'filtered white noise','White noise'});
+xlabel('amplitude');
+ylabel('time[s]');
+set(findall(gcf,'-property','FontSize'),'FontSize',12);
+hold off
+
+[Y, freq] = make_spectrum(con,f);
+figure(302) %not in dB
+Y_mag = abs(Y);
+subplot(2,1,1)
+plot(freq,Y_mag)
+%xlim([-25000,25000]);
+title('Frequency responce of filtered white noise')
+ylabel('Magnitude');
+xlabel('Frequency[Hz]')
+grid();
+subplot(2,1,2)
+Yn = Y;
+Yn(abs(Y)<max(abs(Y))/10000)=0; % Reducing amount of noice
+plot(freq,angle(Yn));
+%xlim([-500,500]);
+%ylim([-6*pi 2*pi]);
+ylabel('Phase[rad]');
+xlabel('Frequency[Hz]')
+set(findall(gcf,'-property','FontSize'),'FontSize',12);
+%yticks(-6*pi:pi:pi);
+%yticklabels({'-6\pi','-5\pi','-4\pi','-3\pi','-2\pi','\pi','0','\pi','2\pi'});
+grid();
+
+figure(303) %in dB
+Y_db = 20*log10(abs(Y));
+subplot(2,1,1)
+plot(freq,Y_db)
+%xlim([-25000,25000]);
+title('Frequency responce of filtered white noise')
+ylabel('Magnitude[dB]');
+xlabel('Frequency[Hz]')
+grid();
+subplot(2,1,2)
+Yn = Y;
+Yn(abs(Y)<max(abs(Y))/10000)=0; % Reducing amount of noice
+plot(freq,angle(Yn));
+%xlim([-500,500]);
+%ylim([-6*pi 2*pi]);
+ylabel('Phase[rad]');
+xlabel('Frequency[Hz]')
+set(findall(gcf,'-property','FontSize'),'FontSize',12);
+%yticks(-6*pi:pi:pi);
+%yticklabels({'-6\pi','-5\pi','-4\pi','-3\pi','-2\pi','\pi','0','\pi','2\pi'});
+grid();
+
+[Y, freq] = make_spectrum(xn,f);
+figure(304) %frequency responce od white noise
+Y_db = 20*log10(abs(Y));
+subplot(2,1,1)
+plot(freq,Y_dB)
+%xlim([-25000,25000]);
+title('Frequency responce of filtered white noise')
+ylabel('Magnitude');
+xlabel('Frequency[Hz]')
+grid();
+subplot(2,1,2)
+Yn = Y;
+Yn(abs(Y)<max(abs(Y))/10000)=0; % Reducing amount of noice
+plot(freq,angle(Yn));
+%xlim([-500,500]);
+%ylim([-6*pi 2*pi]);
+ylabel('Phase[rad]');
+xlabel('Frequency[Hz]')
+set(findall(gcf,'-property','FontSize'),'FontSize',12);
+%yticks(-6*pi:pi:pi);
+%yticklabels({'-6\pi','-5\pi','-4\pi','-3\pi','-2\pi','\pi','0','\pi','2\pi'});
+grid();
+
+
+%% specturm of white noise - not normalized
+
+xn = randn(1,100000);  % 100 white noise samples,
+                  %   uniform between 0 and 1.
+%xn = 2*(x-0.5);   % Make it uniform between -1 and +1
+
+f=4000; %some random sampling frequency 
+ts=0:1/f:((length(xn)/f)-1/f); 
+%time_vector = 0:1/fs:T_s-1/fs;
+figure(303)
+con=conv(xn,filter);
+tc=0:1/f:((length(con)/f)-1/f); 
+plot(tc,con)
+hold on
+plot(ts,xn)
+title('Randomly generated white noise with f_{s}=40000Hz')
+legend({'White noise','filtered white noise'});
+xlabel('amplitude');
+ylabel('time[s]');
+set(findall(gcf,'-property','FontSize'),'FontSize',12);
+hold off
+
+[Y, freq] = make_spectrum(con,f);
+Y_db = 20*log10(abs(Y));
+figure(304)
+Y_mag = abs(Y);
+subplot(2,1,1)
+plot(freq,Y_mag)
+%xlim([-25000,25000]);
+title('Frequency responce of filtered white noise')
+ylabel('Magnitude[dB]');
+xlabel('Frequency[Hz]')
+grid();
+subplot(2,1,2)
+Yn = Y;
+Yn(abs(Y)<max(abs(Y))/10000)=0; % Reducing amount of noice
+plot(freq,angle(Yn));
+%xlim([-500,500]);
+%ylim([-6*pi 2*pi]);
+ylabel('Phase[rad]');
+xlabel('Frequency[Hz]')
+set(findall(gcf,'-property','FontSize'),'FontSize',12);
+%yticks(-6*pi:pi:pi);
+%yticklabels({'-6\pi','-5\pi','-4\pi','-3\pi','-2\pi','\pi','0','\pi','2\pi'});
+grid();
+
+
+
 %% Ex 2
 H = [1 1 1]*(1/3);
 figure(201)
