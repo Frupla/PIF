@@ -84,7 +84,7 @@ figure(5)
 title("Frequency response of 10% ofthe effective value of the filter");
 freqz(h10,t10)
 
-%% 1.2
+%% 3.1.2
 
 set(groot,'defaultAxesFontSize',10);
 
@@ -114,29 +114,9 @@ ylabel('Magnitude [ ]')
 %%
 set(groot,'defaultLineLineWidth',2);
 
-figure(2)
-plot(f,fftshift(H))
-title('Frequency response');
-grid();
-xlabel('Frequency [Hz]')
-ylabel('Magnitude [ ]')
-ylim([-0.1 1.1])
+fir = dsp.FIRFilter(h');
 
-figure(3)
-plot(fftshift(H));
-title('Frequency response');
-
-
-figure(5)
-freqz(h)
-fig = gcf;
-axes = get(fig,'children');
-set(axes,'FontSize',12);
-mag = get(axes(1),'children');
-phase = get(axes(2),'children');
-set(mag,'linewidth',1);
-set(phase,'linewidth',1);
-title('Normalized frequncy response, 99th order five band equalizer');
+freqz(fir)
 
 %%
 window50 = [zeros(150,1);ones(301,1);zeros(150,1)];
@@ -151,7 +131,7 @@ plot(window5)
 
 h50 = window50.*h;
 
-h25 = window25.*h;
+h25 = window25.*h; 
 
 h10 = window10.*h;
 
@@ -171,7 +151,7 @@ legend('full','half','quarter','tenth');
 hold off
 xlabel('Frequency [Hz]');
 %%
-figure(2) % The lines need to be more thicc
+figure(2)
 hold on
 plot(t,h)
 plot(t,h50')
