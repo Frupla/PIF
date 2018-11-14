@@ -267,3 +267,21 @@ f_sup = 0.6665*0.5; %0.333333 Hz
 %H = exp(1i*omega)*(1+cos(2*omega));
 
 
+function [filter] = fiveInOne (gain1,gain2,gain3,gain4,gain5)
+%Input: 5 different gains in dB
+%Output: the IR of a l-1 =99 order filter, split into 5 equal bands
+%        each attenuated with the one of the 5 gains 
+%Example of use:
+%filter=fiveInOne(20,15,10,5,0);
+l = 100; %corresponding to order+1
+H = horzcat(ones(1,(l/10))*db2mag(gain1),ones(1,(l/10))*db2mag(gain2),ones(1,(l/10))*db2mag(gain3),ones(1,(l/10))*db2mag(gain4),ones(1,(l/10))*db2mag(gain5));
+H = horzcat(H,fliplr(H));
+%figure(); %uncomment these five lines to see a plot of the samples
+%stem(H,'linewidth',1);
+%title('FIR filter in frequncy domain');
+%ylabel('Amplitude');
+%xlabel('Sample number');
+h = ifft((H),'symmetric');
+h = fftshift(h); %gives the impulse response
+filter = h; 
+end
