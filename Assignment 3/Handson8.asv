@@ -99,7 +99,7 @@ f = -length(H)*F0/2:F0:((length(H)-1)*F0/2);
 
 
 h = fftshift(ifft(H,'symmetric'));
-t = 0:T0*(10^6):(length(h)*T0*(10^6)-T0*(10^6));
+t = 0:T0:(length(h)*T0-T0);
 
 
 figure(1)
@@ -187,20 +187,16 @@ hold off
 %%
 figure(2) % The lines need to be more thicc
 subplot(4,1,1)
-plot(t,h)
+plot((t*(10^5)),h)
 xlim([0 t(end)])
-title('The various impulse responses (no cut off)');
 subplot(4,1,2)
-plot(t(1:300),h50(1:300))
-title('50% cut off');
+plot(t(1:300)*(10^5)),h50(1:300))
 xlim([0 t(300)])
 subplot(4,1,3)
 plot(t(1:150),h25(1:150))
-title('25% cut off');
 xlim([0 t(150)])
 subplot(4,1,4)
 plot(t(1:60),h10(1:60))
-title('10% cut off');
 xlim([0 t(60)])
-xlabel('Time [µs]');
+
 
