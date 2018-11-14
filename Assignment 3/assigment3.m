@@ -1,5 +1,5 @@
 % Assigment 3
-
+set(groot,'defaultLineLineWidth',2);
 %% filter=fiveInOne(0.1,0.2,0.3,0.4,0.5);
 %I FIR filtre er implus respons = B værdier
 filter=fiveInOne(20,15,10,5,0);
@@ -21,23 +21,37 @@ axes = get(fig,'children');
 set(axes,'FontSize',12);
 mag = get(axes(1),'children');
 phase = get(axes(2),'children');
-set(mag,'linewidth',1);
-set(phase,'linewidth',1);
-title('Normalized frequncy response, 99th order five band equalizer');
+%set(mag,'linewidth',1);
+%set(phase,'linewidth',1);
+title('Normalized frequency response, 99th order five band equalizer');
 
 
 %%
-fil = zero_pad(ones(1,200),filter)
 figure(224)
-freqz(fil) %ferquncy responce of the zero padded one - it's the same, duh
-fig = gcf;
-axes = get(fig,'children');
-set(axes,'FontSize',12);
-mag = get(axes(1),'children');
-phase = get(axes(2),'children');
-set(mag,'linewidth',1);
-set(phase,'linewidth',1);
-title('Normalized frequncy response, 99th order five band equalizer,zero padded');
+[phi0,w0]=phasez(filter);
+plot(w0,phi0);
+hold on
+[phi1,w1]=phasez([zeros(1,200) filter]);
+plot(w1,phi1);
+[phi2,w2]=phasez([zeros(1,600) filter]);
+plot(w2,phi2);
+[phi3,w3]=phasez([zeros(1,800) filter]);
+plot(w3,phi3);
+xlim([0 pi]);
+legend('0 zeros','200 zeros','600 zeros','800 zeros','Location','West')
+hold off
+%fig = gcf;
+%axes = get(fig,'children');
+%set(axes,'FontSize',12);
+%mag = get(axes(1),'children');
+%phase = get(axes(2),'children');
+%set(mag,'linewidth',1);
+%set(phase,'linewidth',1);
+hold off
+ylabel('phase[degrees]')
+xlabel('frequency[Hz]')
+
+title('Normalized frequency phase response, differently zero padded');
 %obv. it has no effect, why would it?
 
 [s,f] = importSound('Sweep.wav');
@@ -57,7 +71,9 @@ ylabel('time[s]');
 set(findall(gcf,'-property','FontSize'),'FontSize',12);
 hold off
 %% Left: plotting and explaining the spectrum - here sweep
+[Yc, freqc] = make_spectrum(s,f);
 
+Yc_db = 20*log10(abs(Yc));
 [Y, freq] = make_spectrum(con,f);
 
 Y_db = 20*log10(abs(Y));
@@ -67,24 +83,30 @@ plot(freq,Y_mag)
 
 figure(227)
 subplot(2,1,1)
-plot(freq,Y_db)
+plot(freq,Y_db,'Color','red')
+hold on
+plot(freqc,Yc_db,'Color','blue')
 %xlim([-25000,25000]);
-title('Frequency responce of filtered frequency sweep')
+title('Frequency responce of unfiltered and filtered frequency sweep')
 ylabel('Magnitude[dB]');
 xlabel('Frequency[Hz]')
+legend('Unfiltered sweep','Filtered sweep')
 grid();
 subplot(2,1,2)
-Yn = Y;
 %Yn(abs(Y)<max(abs(Y))/10000)=0; % Reducing amount of noice
-plot(freq,angle(Yn));
+plot(freq,angle(Y),'Color','red');
+hold on
+plot(freqc,angle(Yc),'Color','blue');
 %xlim([-500,500]);
 %ylim([-6*pi 2*pi]);
 ylabel('Phase[rad]');
-xlabel('Frequency[Hz]')
+xlabel('Frequency[Hz]');
+legend('Unfiltered sweep','Filtered sweep')
 set(findall(gcf,'-property','FontSize'),'FontSize',12);
 %yticks(-6*pi:pi:pi);
 %yticklabels({'-6\pi','-5\pi','-4\pi','-3\pi','-2\pi','\pi','0','\pi','2\pi'});
 grid();
+hold off
 
 %% specturm of white noise
 
@@ -153,29 +175,104 @@ set(findall(gcf,'-property','FontSize'),'FontSize',12);
 %yticklabels({'-6\pi','-5\pi','-4\pi','-3\pi','-2\pi','\pi','0','\pi','2\pi'});
 grid();
 
-[Y, freq] = make_spectrum(xn,f);
-figure(304) %frequency responce od white noise
-Y_db = 20*log10(abs(Y));
-subplot(2,1,1)
-plot(freq,Y_dB)
+%% 
+x = rand(1,100000);  % 100 white noise samples,
+                  %   uniform between 0 and 1.
+xn = 2*(x-0.5);   % Make it uniform between -1 and +1
+
+f=40000; %some random sampling frequency 
+[Yn, freqn] = make_spectrum(xn,f);
+con=conv(xn,filter);
+[Y, freq] = make_spectrum(con,f);
+Yn_dB = 20*log10(abs(Yn));
+Y_dB = 20*log10(abs(Y));
+figure(304) %frequency responce of white noise filtered and not
+subplot(2,2,1)
+plot(freqn,Yn_dB,'Color','blue')
+hold on
+plot(freq,Y_dB,'Color','red')
 %xlim([-25000,25000]);
-title('Frequency responce of filtered white noise')
+title({'Frequency response of unfiltered', 'and filtered white noise'})
 ylabel('Magnitude');
 xlabel('Frequency[Hz]')
+legend('Unfiltered white noise','Filtered white noise','Location','South');
+%rect = [0.75, 0.75, .75, .75];
+set(findall(gcf,'-property','FontSize'),'FontSize',12);
+%set(h, 'Position', rect)
 grid();
-subplot(2,1,2)
-Yn = Y;
-Yn(abs(Y)<max(abs(Y))/10000)=0; % Reducing amount of noice
-plot(freq,angle(Yn));
+hold off
+subplot(2,2,3)
+%Yn = Y;
+%Yn(abs(Y)<max(abs(Y))/10000)=0; % Reducing amount of noise
+plot(freqn,angle(Yn),'Color','blue');
+hold on
+plot(freq,angle(Y),'Color','red');
 %xlim([-500,500]);
 %ylim([-6*pi 2*pi]);
 ylabel('Phase[rad]');
 xlabel('Frequency[Hz]')
+legend('Unfiltered white noise','Filtered white noise');
 set(findall(gcf,'-property','FontSize'),'FontSize',12);
 %yticks(-6*pi:pi:pi);
 %yticklabels({'-6\pi','-5\pi','-4\pi','-3\pi','-2\pi','\pi','0','\pi','2\pi'});
 grid();
+hold off
+subplot(2,2,2)
+plot(freq,Y_dB,'Color','red')
+hold on
+plot(freqn,Yn_dB,'Color','blue')
+%xlim([-25000,25000]);
+title({'Frequency response of unfiltered','and filtered white noise'})
+ylabel('Magnitude');
+xlabel('Frequency[Hz]')
+legend('Filtered white noise','Unfiltered white noise','Location','South');
+set(findall(gcf,'-property','FontSize'),'FontSize',12);
+grid();
+hold off
+subplot(2,2,4)
+%Yn = Y;
+%Yn(abs(Y)<max(abs(Y))/10000)=0; % Reducing amount of noise
+plot(freq,angle(Y),'Color','red');
+hold on
+plot(freqn,angle(Yn),'Color','blue');
+%xlim([-500,500]);
+%ylim([-6*pi 2*pi]);
+ylabel('Phase[rad]');
+xlabel('Frequency[Hz]')
+legend('Filtered white noise','Unfiltered white noise');
+set(findall(gcf,'-property','FontSize'),'FontSize',12);
+%yticks(-6*pi:pi:pi);
+%yticklabels({'-6\pi','-5\pi','-4\pi','-3\pi','-2\pi','\pi','0','\pi','2\pi'});
+grid();
+hold off
 
+figure(305) %frequency responce of white noise filtered and not
+subplot(2,1,1)
+plot(freqn,Yn_dB,'Color','blue')
+hold on
+plot(freq,Y_dB,'Color','red')
+%xlim([-25000,25000]);
+title('Frequency response of unfiltered and filtered white noise')
+ylabel('Magnitude');
+xlabel('Frequency[Hz]')
+legend('Unfiltered white noise','Filtered white noise','Location','South');
+%rect = [0.75, 0.75, .75, .75];
+set(findall(gcf,'-property','FontSize'),'FontSize',12);
+%set(h, 'Position', rect)
+grid();
+hold off
+subplot(2,1,2)
+plot(freq,Y_dB,'Color','red')
+hold on
+plot(freqn,Yn_dB,'Color','blue')
+%xlim([-25000,25000]);
+%title({'Frequency response of unfiltered','and filtered white noise'})
+ylabel('Magnitude');
+xlabel('Frequency[Hz]')
+legend('Filtered white noise','Unfiltered white noise','Location','South');
+set(findall(gcf,'-property','FontSize'),'FontSize',12);
+grid();
+hold off
 
 %% specturm of white noise - not normalized
 
@@ -186,7 +283,7 @@ xn = randn(1,100000);  % 100 white noise samples,
 f=4000; %some random sampling frequency 
 ts=0:1/f:((length(xn)/f)-1/f); 
 %time_vector = 0:1/fs:T_s-1/fs;
-figure(303)
+figure(310)
 con=conv(xn,filter);
 tc=0:1/f:((length(con)/f)-1/f); 
 plot(tc,con)
@@ -200,8 +297,9 @@ set(findall(gcf,'-property','FontSize'),'FontSize',12);
 hold off
 
 [Y, freq] = make_spectrum(con,f);
+[Yn, freqn] = make_spectrum(xn,f);
 Y_db = 20*log10(abs(Y));
-figure(304)
+figure(311)
 Y_mag = abs(Y);
 subplot(2,1,1)
 plot(freq,Y_mag)
