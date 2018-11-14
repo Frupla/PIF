@@ -86,6 +86,7 @@ freqz(h10,t10)
 
 %% 1.2
 
+set(groot,'defaultAxesFontSize',10);
 
 Fs = 30000;
 Ts = 1/Fs;
@@ -103,16 +104,15 @@ t = 0:T0*(10^6):(length(h)*T0*(10^6)-T0*(10^6));
 
 
 figure(1)
-stem(t,h);
+plot(t,h);
 title('Impulse response');
 grid();
-xlabel('Time [s]')
+xlabel('Time [µs]')
 ylabel('Magnitude [ ]')
 
 
 %%
 set(groot,'defaultLineLineWidth',2);
-set(groot,'defaultAxesFontSize',20);
 
 figure(2)
 plot(f,fftshift(H))
@@ -138,69 +138,48 @@ set(mag,'linewidth',1);
 set(phase,'linewidth',1);
 title('Normalized frequncy response, 99th order five band equalizer');
 
+%%
+window50 = [zeros(150,1);ones(301,1);zeros(150,1)];
+window25 = [zeros(225,1);ones(151,1);zeros(225,1)];
+window10 = [zeros(270,1);ones(61,1);zeros(270,1)];
 
+
+figure(1)
+plot(window5)
 
 %% Here I make the impulse response gradually shorter
 
-h50 = zero_pad_alt(h(1:floor(0.50*length(h))),h);
+h50 = window50.*h;
 
-h25 = zero_pad_alt(h(1:floor(0.25*length(h))),h);
+h25 = window25.*h;
 
-h10 = zero_pad_alt(h(1:floor(0.10*length(h))),h);
+h10 = window10.*h;
+
 
 H50 = fft(h50);
 H25 = fft(h25);
 H10 = fft(h10);
 
 figure(1)
-subplot(2,1,1);
 hold on
 plot(f,fftshift(abs(fft(h))))
 plot(f,fftshift(abs(fft(h50))))
 plot(f,fftshift(abs(fft(h25))))
 plot(f,fftshift(abs(fft(h10))))
-xlim([0 f(end)])
+xlim([0 15000])
 legend('full','half','quarter','tenth');
 hold off
-
-Hn = H;
-Hn(abs(H)<max(abs(H))/10000)=0; % Reducing amount of noice
-
-H50n = H50;
-H50n(abs(H50)<max(abs(H50))/10000)=0; % Reducing amount of noice
-
-H25n = H25;
-H25n(abs(H25)<max(abs(H25))/10000)=0; % Reducing amount of noice
-
-H10n = H10;
-H10n(abs(H10)<max(abs(H10))/10000)=0; % Reducing amount of noice
-
-
-subplot(2,1,2); % I'm not sure what to do about the phase here :/
-hold on
-plot(f,fftshift(angle(Hn)));
-plot(f,fftshift(angle(H50n)));
-plot(f,fftshift(angle(H25n)));
-plot(f,fftshift(angle(H10n)));
-xlim([0 f(end)])
-hold off
+xlabel('Frequency [Hz]');
 %%
 figure(2) % The lines need to be more thicc
-subplot(4,1,1)
+hold on
 plot(t,h)
+plot(t,h50')
+plot(t,h25')
+plot(t,h10')
 xlim([0 t(end)])
-title('The various impulse responses (no cut off)');
-subplot(4,1,2)
-plot(t(1:300),h50(1:300))
-title('50% cut off');
-xlim([0 t(300)])
-subplot(4,1,3)
-plot(t(1:150),h25(1:150))
-title('25% cut off');
-xlim([0 t(150)])
-subplot(4,1,4)
-plot(t(1:60),h10(1:60))
-title('10% cut off');
-xlim([0 t(60)])
+ylim([-0.01 0.01])
 xlabel('Time [µs]');
-
+title('The various impulse responses');
+hold off
+legend('Full','Half','Quarter','Tenth');
