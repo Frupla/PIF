@@ -6,6 +6,25 @@ plotTwoSoundFilesAndCorrelation('in_length_1000.wav','out_length_1000.wav',1000,
 plotTwoSoundFilesAndCorrelation('in_length_10000.wav','out_length_10000.wav',10000,10001);
 plotTwoSoundFilesAndCorrelation('in_length_100000.wav','out_length_100000.wav',1000000,1000001);
 plotTwoSoundFilesAndCorrelation('in_length_500000.wav','out_length_500000.wav',5000000,5000001);
+
+%% Ex 1.2
+
+[H1, F1] = plotInOut('100',1);
+[H2, F2] = plotInOut('1000',2);
+[H3, F3] = plotInOut('10000',3);
+[H4, F4] = plotInOut('100000',4);
+[H5, F5] = plotInOut('500000',5);
+
+close 6
+figure(6)
+hold on
+plot(F1,mag2db(abs(H1)))
+plot(F2,mag2db(abs(H2)))
+plot(F3,mag2db(abs(H3)))
+plot(F4,mag2db(abs(H4)))
+plot(F5,mag2db(abs(H5)))
+hold off
+
 %% Ex 2
 [s,f] = audioread('animal_call.wav');
 % figure(200)
@@ -43,29 +62,3 @@ figure(5)
 [A, fs] = spectre('animal_call.wav', 'hann', 99,1,100);
 imagesc(abs(A').^2);
 %I guess we could try filtering it with something?
-
-
-%% functions
-function [] = plotTwoSoundFilesAndCorrelation(namein, nameout, figurenumber1, figurenumber2)
-[in fin] = audioread(namein);
-[out fout] = audioread(nameout);
-tin = (0:length(in)-1)/fin;
-tout = (0:length(out)-1)/fout;
-
-figure(figurenumber1)
-subplot(2,1,1)
-plot(tin,in);
-title(namein)
-xlabel('Time (s)')
-subplot(2,1,2)
-plot(tout,out);
-title(nameout)
-xlabel('Time (s)')
-
-
-
-[r,lags] = xcorr(in,out);
-figure(figurenumber2)
-plot(lags,r)
-title('Correlation');
-end
