@@ -13,9 +13,9 @@ F = Fin;
 
 figure(figureNumber)
 subplot(2,1,1)
-plot(Fin,abs(In));
+plot(Fin,In);
 subplot(2,1,2)
-plot(Fout,abs(Out));
+plot(Fout,mag2db(abs(Out)));
 
 
 end

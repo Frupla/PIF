@@ -18,11 +18,11 @@ plotTwoSoundFilesAndCorrelation('in_length_500000.wav','out_length_500000.wav',5
 close 6
 figure(6)
 hold on
-plot(F1,mag2db(abs(H1)))
-plot(F2,mag2db(abs(H2)))
-plot(F3,mag2db(abs(H3)))
-plot(F4,mag2db(abs(H4)))
 plot(F5,mag2db(abs(H5)))
+plot(F4,mag2db(abs(H4)))
+plot(F3,mag2db(abs(H3)))
+plot(F2,mag2db(abs(H2)))
+plot(F1,mag2db(abs(H1)))
 hold off
 
 %% Ex 2
