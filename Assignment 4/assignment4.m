@@ -7,20 +7,20 @@
 [r3,fin3] = plotTwoSoundFilesAndCorrelation('in_length_10000.wav','out_length_10000.wav',10000,10001,10002);
 [r4,fin4] = plotTwoSoundFilesAndCorrelation('in_length_100000.wav','out_length_100000.wav',100000,100001,100002);
 [r5,fin5] = plotTwoSoundFilesAndCorrelation('in_length_500000.wav','out_length_500000.wav',500000,500001,500002);
-e1 = sum(r1.^2)/length(r1);
-e2 = sum(r2.^2)/length(r2);
-e3 = sum(r3.^2)/length(r3);
-e4 = sum(r4.^2)/length(r4);
-e5 = sum(r5.^2)/length(r5);
-r11 = r1./(e1);
-r22 = r2./(e2);
-r33 = r3./(e3);
-r44 = r4./(e4);
-r55 = r5./(e5);
-r222 = downsample(r2,floor(1000/100));
-r333 = downsample(r33,floor(10000/100));
-r444 = downsample(r44,floor(100000/100));
-r555 = downsample(r55,floor(500000/100));
+r22 = downsample(r2,floor(1000/100));
+r33 = downsample(r3,floor(10000/100));
+r44 = downsample(r4,floor(100000/100));
+r55 = downsample(r5,floor(500000/100));
+e1 = 1;%sum(r11.^2)/length(r11);
+e2 = 1;%sum(r22.^2)/length(r22);
+e3 = 1;%sum(r33.^2)/length(r33);
+e4 = 1;%sum(r44.^2)/length(r44);
+e5 = 1;%sum(r55.^2)/length(r55);
+r111 = r11./(e1);
+r222 = r22./(e2);
+r333 = r33./(e3);
+r444 = r44./(e4);
+r555 = r55./(e5);
 %%
 
 figure(105)
@@ -29,10 +29,10 @@ hold on
 plot(r222);
 plot(r333);
 plot(r444);
-plot(r555);
+plot(r555); 
 hold off
 legend('100','1000','10000','100000','500000');
-title('Downsampled to length of 100, each normalized ');
+title('Downsampled to length of 100');
 
 %%
 
