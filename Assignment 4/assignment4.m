@@ -58,12 +58,9 @@ plot(F4,mag2db(abs(H4)))
 plot(F3,mag2db(abs(H3)))
 plot(F2,mag2db(abs(H2)))
 plot(F1,mag2db(abs(H1)))
-<<<<<<< HEAD
 ylabel('Magnitude[dB]')
 xlabel('Frequency[Hz]')
 legend('100 points','1000 points','10000 points','100000 points','500000 points');
-=======
->>>>>>> 7d94e1c168109de9c00560631cd81f6895c1e3f8
 hold off
 
 %% Ex 2
@@ -178,13 +175,10 @@ end
 % grid();
 % hold off
 % 
-<<<<<<< HEAD
 
-=======
-my_spectrogram('animal_call.wav',1,99,0,203);
+%my_spectrogram('animal_call.wav',1,99,0,203);
 %%
 figure(5)
 [A, fs] = spectre('animal_call.wav', 'hann', 99,1,100);
 imagesc(abs(A(:,1:round(99/2))));
 %I guess we could try filtering it with something?
->>>>>>> 7d94e1c168109de9c00560631cd81f6895c1e3f8
