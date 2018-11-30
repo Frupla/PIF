@@ -13,7 +13,7 @@ F = Fin;
 
 figure(figureNumber)
 subplot(2,1,1)
-plot(Fin,In);
+plot(Fin,abs(In));
 subplot(2,1,2)
 plot(Fout,mag2db(abs(Out)));
 
