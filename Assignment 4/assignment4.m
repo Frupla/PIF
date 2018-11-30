@@ -1,7 +1,7 @@
 % Assignment 4
 %% Ex 1
 
-<<<<<<< HEAD
+
 [r1,fin1] = plotTwoSoundFilesAndCorrelation('in_length_100.wav','out_length_100.wav',100,101,102);
 [r2,fin2] = plotTwoSoundFilesAndCorrelation('in_length_1000.wav','out_length_1000.wav',1000,1001,1002);
 [r3,fin3] = plotTwoSoundFilesAndCorrelation('in_length_10000.wav','out_length_10000.wav',10000,10001,10002);
@@ -38,17 +38,9 @@ figure(104)
 plot(lags,r)
 hold on
 [r,lags] = xcorr(in1,out1);
-rsub = r(((length(r)/2)-100):((length(r)/2)+100));
-plot(r);
-hold off
-
-
-=======
-plotTwoSoundFilesAndCorrelation('in_length_100.wav','out_length_100.wav',100,101);
-plotTwoSoundFilesAndCorrelation('in_length_1000.wav','out_length_1000.wav',1000,1001);
-plotTwoSoundFilesAndCorrelation('in_length_10000.wav','out_length_10000.wav',10000,10001);
-plotTwoSoundFilesAndCorrelation('in_length_100000.wav','out_length_100000.wav',1000000,1000001);
-plotTwoSoundFilesAndCorrelation('in_length_500000.wav','out_length_500000.wav',5000000,5000001);
+%rsub = r(((length(r)/2)-100):((length(r)/2)+100));
+%plot(r);
+%hold off
 
 %% Ex 1.2
 
@@ -61,14 +53,16 @@ plotTwoSoundFilesAndCorrelation('in_length_500000.wav','out_length_500000.wav',5
 close 6
 figure(6)
 hold on
-plot(F1,mag2db(abs(H1)))
-plot(F2,mag2db(abs(H2)))
-plot(F3,mag2db(abs(H3)))
-plot(F4,mag2db(abs(H4)))
 plot(F5,mag2db(abs(H5)))
+plot(F4,mag2db(abs(H4)))
+plot(F3,mag2db(abs(H3)))
+plot(F2,mag2db(abs(H2)))
+plot(F1,mag2db(abs(H1)))
+ylabel('Magnitude[dB]')
+xlabel('Frequency[Hz]')
+legend('100 points','1000 points','10000 points','100000 points','500000 points');
 hold off
 
->>>>>>> e75192b13050617dd567a409502e4dd019d17385
 %% Ex 2
 [s,f] = audioread('animal_call.wav');
 % figure(200)
@@ -77,7 +71,6 @@ hold off
 [Y, freq] = make_spectrum(s,f); %spectrum
 Y_db = 20*log10(abs(Y));
 
-<<<<<<< HEAD
 figure(201) %Plotting the frequency responses of the two filters on top of each other
 subplot(2,1,1)
 plot(freq,Y_db,'Color','red')
@@ -105,11 +98,10 @@ figure(202)
 my_spectrogram('animal_call.wav',1,99,203,120);
 %my_spectrogram('Sax12.wav',1,99,0,205);
 %I guess we could try filtering it with something?
-%%
-[s,f] = audioread('animal_call.wav');
+
+%% 
 figure(203)
-spectrogram(s,150,100)
-title('Spectogram, using the built in matlab spectogram function')
+spectrogram(s,102,50)
 
 %% functions
 function [r,fin] = plotTwoSoundFilesAndCorrelation(namein, nameout, figurenumber1, figurenumber2,figurenumber3)
@@ -160,7 +152,6 @@ hold off
 %figure(figurenumber3);
 %plot(h)
 end
-=======
 % figure(201) %Plotting the frequency responses of the two filters on top of each other
 % subplot(2,1,1)
 % plot(freq,Y_db,'Color','red')
@@ -184,10 +175,4 @@ end
 % grid();
 % hold off
 % 
-my_spectrogram('animal_call.wav',1,99,0,203);
 
-figure(5)
-[A, fs] = spectre('animal_call.wav', 'hann', 99,1,100);
-imagesc(abs(A').^2);
-%I guess we could try filtering it with something?
->>>>>>> e75192b13050617dd567a409502e4dd019d17385
