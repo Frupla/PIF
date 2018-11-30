@@ -100,10 +100,6 @@ figure(5)
 [A, fs] = spectre('animal_call.wav', 'hann', 99,1,100,1);
 imagesc(abs(A(:,1:round(99/2))));
 %I guess we could try filtering it with something?
-<<<<<<< HEAD
-
-=======
->>>>>>> d72c08f7169d541ae7e6267541fc72963bbae7a3
 %%
 
 spectre('Animal_call.wav','hann',199,0.2,200,1);
