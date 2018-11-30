@@ -34,6 +34,52 @@ hold off
 legend('100','1000','10000','100000','500000');
 title('Downsampled to length of 100, each normalized ');
 
+%%
+
+[h1,fs1] = plotTwoSoundFilesAndCorrelation('in_length_100.wav','out_length_100.wav',100,101,102,0);
+[h2,fs2] = plotTwoSoundFilesAndCorrelation('in_length_1000.wav','out_length_1000.wav',1000,1001,1002,0);
+[h3,fs3] = plotTwoSoundFilesAndCorrelation('in_length_10000.wav','out_length_10000.wav',10000,10001,10002,0);
+[h4,fs4] = plotTwoSoundFilesAndCorrelation('in_length_100000.wav','out_length_100000.wav',100000,100001,100002,0);
+[h5,fs5] = plotTwoSoundFilesAndCorrelation('in_length_500000.wav','out_length_500000.wav',500000,500001,500002,0);
+
+H1 = fft(h1);
+H2 = fft(h2);
+H3 = fft(h3);
+H4 = fft(h4);
+H5 = fft(h5);
+
+H1 = zero_pad_alt(H1,H5);
+H2 = zero_pad_alt(H2,H5);
+H3 = zero_pad_alt(H3,H5);
+H4 = zero_pad_alt(H4,H5);
+
+h1 = ifft(H1,'symmetric');
+h2 = ifft(H2,'symmetric');
+h3 = ifft(H3,'symmetric');
+h4 = ifft(H4,'symmetric');
+h5 = ifft(H5,'symmetric');
+
+e1 = sum(h1.^2);
+e2 = sum(h2.^2);
+e3 = sum(h3.^2);
+e4 = sum(h4.^2);
+e5 = sum(h5.^2);
+h1 = h1./max(h1);
+h2 = h2./max(h2);
+h3 = h3./max(h3);
+h4 = h4./max(h4);
+h5 = h5./max(h5);
+
+close 1
+figure(1)
+hold on
+plot(h5);
+plot(h4);
+plot(h3);
+plot(h2);
+plot(h1);
+legend('100','1000','10000','100000','500000');
+hold off
 
 %% Ex 1.2
 
