@@ -89,6 +89,6 @@ figure(5)
 imagesc(abs(A(:,1:round(99/2))));
 %I guess we could try filtering it with something?
 %%
-
+colormap bone
 spectre('Animal_call.wav','hann',199,0.2,200,1);
 spectre('Animal_call.wav','hann',249,0.1,250,2);

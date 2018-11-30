@@ -1,6 +1,5 @@
-function [matrix, fs] = spectre(filename, window_type, window_length, overlap, points,n)
+function [matrix, fs] = spectre(filename, window_type, window_length, overlap, points)
 % Generates a spectrogram based on a sound file.
-
 
 [signal, fs] = import_sound(filename);
 
@@ -19,14 +18,8 @@ end
 for i = 1:floor((length(signal)/window_length)/overlap)
    temp = signal(1:window_length);
    temp = temp.*window';
-   matrix(i,:) = fft(temp, points); 
-   signal = circshift(signal,floor(window_length*overlap));
+   matrix(i,:) = fft(temp, points);
+   sign= circshift(temp,floor(window_length*i*overlap))
 end
-
-figure(n)
-imagesc(mag2db(abs(matrix(:,1:round(points/2)))));
-colorbar();
-xlabel('Frequency');
-ylabel('Sample number');
 
 end
