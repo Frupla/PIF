@@ -14,6 +14,9 @@ Y = fftshift(fft(out));
 
 H = Y./X;
 
+plot(abs(H))
+
+%%
 plot(abs(make_spectrum(in,fin)))
 hold on
 plot(abs(make_spectrum(out,fout)))
