@@ -2,11 +2,24 @@
 %% Ex 1
 
 
-[r1,fin1] = plotTwoSoundFilesAndCorrelation('in_length_100.wav','out_length_100.wav',100,101,102,0);
-[r2,fin2] = plotTwoSoundFilesAndCorrelation('in_length_1000.wav','out_length_1000.wav',1000,1001,1002,0);
-[r3,fin3] = plotTwoSoundFilesAndCorrelation('in_length_10000.wav','out_length_10000.wav',10000,10001,10002,0);
-[r4,fin4] = plotTwoSoundFilesAndCorrelation('in_length_100000.wav','out_length_100000.wav',100000,100001,100002,0);
-[r5,fin5] = plotTwoSoundFilesAndCorrelation('in_length_500000.wav','out_length_500000.wav',500000,500001,500002,0);
+[r1,fin1, tin1] = plotTwoSoundFilesAndCorrelation('in_length_100.wav','out_length_100.wav',100,101,102,0);
+[r2,fin2, tin2] = plotTwoSoundFilesAndCorrelation('in_length_1000.wav','out_length_1000.wav',1000,1001,1002,0);
+[r3,fin3, tin3] = plotTwoSoundFilesAndCorrelation('in_length_10000.wav','out_length_10000.wav',10000,10001,10002,0);
+[r4,fin4, tin4] = plotTwoSoundFilesAndCorrelation('in_length_100000.wav','out_length_100000.wav',100000,100001,100002,0);
+[r5,fin5, tin5] = plotTwoSoundFilesAndCorrelation('in_length_500000.wav','out_length_500000.wav',500000,500001,500002,0);
+
+
+%close 1
+figure(1)
+hold on
+plot(tin1,r1);
+plot(tin2,r2);
+plot(tin3,r3);
+plot(tin4,r4);
+plot(tin5,r5);
+hold off
+
+
 r11 = r1;
 r22 = downsample(r2,floor(1000/100));
 r33 = downsample(r3,floor(10000/100));
@@ -24,23 +37,6 @@ r444 = r44./max(abs(r44));
 r555 = r55./max(abs(r55));
 
 
-figure(105)
-subplot(5,1,1);
-title('Downsampled to length of 100');
-stem(r555);
-legend('500000');
-subplot(5,1,2);
-stem(r444);
-legend('100000');
-subplot(5,1,3);
-stem(r333);
-legend('10000');
-subplot(5,1,4);
-stem(r222);
-legend('1000');
-subplot(5,1,5);
-stem(r111);
-legend('100');
 
 %%
 
@@ -178,4 +174,4 @@ imagesc(abs(A(:,1:round(99/2))));
 %%
 
 spectre('Animal_call.wav','hann',199,0.2,200,1);
-spectre('Animal_call.wav','hann',249,0.1,250,2);
+

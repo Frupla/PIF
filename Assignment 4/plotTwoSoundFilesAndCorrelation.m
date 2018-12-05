@@ -1,4 +1,4 @@
-function [r,fin] = plotTwoSoundFilesAndCorrelation(namein, nameout, figurenumber1, figurenumber2,figurenumber3,makeABillionPlots)
+function [r,fin, lags] = plotTwoSoundFilesAndCorrelation(namein, nameout, figurenumber1, figurenumber2,figurenumber3,makeABillionPlots)
 [in fin] = audioread(namein);
 [out fout] = audioread(nameout);
 tin = (0:length(in)-1)/fin;
@@ -8,7 +8,7 @@ tout = (0:length(out)-1)/fout;
 
 
 
-[r,lags] = xcorr(in,out);
+[r,lags] = xcorr(in,out, 'coeff');
 
 [Y, freq] = make_spectrum(r,fin);
 if(makeABillionPlots)

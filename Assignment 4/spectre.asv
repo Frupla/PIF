@@ -19,7 +19,7 @@ end
 for i = 1:floor((length(signal)/window_length)/overlap)
    temp = signal(1:window_length);
    temp = temp.*window';
-   matrix(i,:) = fft(temp, points); 
+   matrix(i,:) = fft(temp, points)./fs); 
    signal = circshift(signal,floor(window_length*overlap));
 end
 
@@ -28,8 +28,5 @@ imagesc(mag2db(abs(matrix(:,1:round(points/2)))));
 colorbar();
 xlabel('Frequency');
 ylabel('Sample number');
-xticklabels({});
-yticklabels({});
-
 
 end
