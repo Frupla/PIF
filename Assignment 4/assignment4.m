@@ -196,5 +196,4 @@ spectrogram(s,102,50)
 %I guess we could try filtering it with something?
 %%
 
-spectre('Animal_call.wav',199,0.2,200,1);
-
+spectre('Animal_call.wav',199,0.3,200,1);
