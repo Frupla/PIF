@@ -26,7 +26,6 @@ end
 figure(n)
 surf(mag2db(abs(matrix(:,1:round(points/2)))), 'EdgeColor','none');
 axis xy; axis tight; colormap(parula); view(0,90);
-%imagesc(mag2db(abs(matrix(:,1:round(points/2)))));
 colorbar();
 xlabel('Frequency');
 ylabel('Sample number');

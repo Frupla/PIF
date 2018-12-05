@@ -191,9 +191,9 @@ my_spectrogram('animal_call.wav',1,99,203,120);
 figure(203)
 spectrogram(s,102,50)
 
-figure(5)
-[A, fs] = spectre('animal_call.wav', 'hann', 99,1,100,1);
-imagesc(abs(A(:,1:round(99/2))));
+%figure(5)
+%[A, fs] = spectre('animal_call.wav', 'hann', 99,1,100,1);
+%imagesc(abs(A(:,1:round(99/2))));
 %I guess we could try filtering it with something?
 %%
 
