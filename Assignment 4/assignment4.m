@@ -2,15 +2,17 @@
 %% Ex 1
 
 
-[r1,fin1] = plotTwoSoundFilesAndCorrelation('in_length_100.wav','out_length_100.wav',100,101,102);
-[r2,fin2] = plotTwoSoundFilesAndCorrelation('in_length_1000.wav','out_length_1000.wav',1000,1001,1002);
-[r3,fin3] = plotTwoSoundFilesAndCorrelation('in_length_10000.wav','out_length_10000.wav',10000,10001,10002);
-[r4,fin4] = plotTwoSoundFilesAndCorrelation('in_length_100000.wav','out_length_100000.wav',100000,100001,100002);
-[r5,fin5] = plotTwoSoundFilesAndCorrelation('in_length_500000.wav','out_length_500000.wav',500000,500001,500002);
+[r1,fin1] = plotTwoSoundFilesAndCorrelation('in_length_100.wav','out_length_100.wav',100,101,102,0);
+[r2,fin2] = plotTwoSoundFilesAndCorrelation('in_length_1000.wav','out_length_1000.wav',1000,1001,1002,0);
+[r3,fin3] = plotTwoSoundFilesAndCorrelation('in_length_10000.wav','out_length_10000.wav',10000,10001,10002,0);
+[r4,fin4] = plotTwoSoundFilesAndCorrelation('in_length_100000.wav','out_length_100000.wav',100000,100001,100002,0);
+[r5,fin5] = plotTwoSoundFilesAndCorrelation('in_length_500000.wav','out_length_500000.wav',500000,500001,500002,0);
+r11 = r1;
 r22 = downsample(r2,floor(1000/100));
 r33 = downsample(r3,floor(10000/100));
 r44 = downsample(r4,floor(100000/100));
 r55 = downsample(r5,floor(500000/100));
+<<<<<<< HEAD
 e1 = sum(r11.^2);
 e2 = sum(r22.^2);
 e3 = sum(r33.^2);
@@ -33,7 +35,105 @@ plot(r555);
 hold off
 legend('100','1000','10000','100000','500000');
 title('Downsampled to length of 199, normalized');
+=======
+e1 = 1;%sum(r11.^2)/length(r11);
+e2 = 1;%sum(r22.^2)/length(r22);
+e3 = 1;%sum(r33.^2)/length(r33);
+e4 = 1;%sum(r44.^2)/length(r44);
+e5 = 1;%sum(r55.^2)/length(r55);
+r111 = r11./max(abs(r11));
+r222 = r22./max(abs(r22));
+r333 = r33./max(abs(r33));
+r444 = r44./max(abs(r44));
+r555 = r55./max(abs(r55));
 
+
+figure(105)
+subplot(5,1,1);
+title('Downsampled to length of 100');
+stem(r555);
+legend('500000');
+subplot(5,1,2);
+stem(r444);
+legend('100000');
+subplot(5,1,3);
+stem(r333);
+legend('10000');
+subplot(5,1,4);
+stem(r222);
+legend('1000');
+subplot(5,1,5);
+stem(r111);
+legend('100');
+
+%%
+
+[h1,fs1] = plotTwoSoundFilesAndCorrelation('in_length_100.wav','out_length_100.wav',100,101,102,0);
+[h2,fs2] = plotTwoSoundFilesAndCorrelation('in_length_1000.wav','out_length_1000.wav',1000,1001,1002,0);
+[h3,fs3] = plotTwoSoundFilesAndCorrelation('in_length_10000.wav','out_length_10000.wav',10000,10001,10002,0);
+[h4,fs4] = plotTwoSoundFilesAndCorrelation('in_length_100000.wav','out_length_100000.wav',100000,100001,100002,0);
+[h5,fs5] = plotTwoSoundFilesAndCorrelation('in_length_500000.wav','out_length_500000.wav',500000,500001,500002,0);
+
+% figure(10)
+% subplot(5,1,1);
+% title('zero padded in frequency domain');
+% stem(h5);
+% legend('500000');
+% subplot(5,1,2);
+% stem(h4);
+% legend('100000');
+% subplot(5,1,3);
+% stem(h3);
+% legend('10000');
+% subplot(5,1,4);
+% stem(h2);
+% legend('1000');
+% subplot(5,1,5);
+% stem(h1);
+% legend('100');
+
+H1 = fft(h1);
+H2 = fft(h2);
+H3 = fft(h3);
+H4 = fft(h4);
+H5 = fft(h5);
+
+H1 = zero_pad_alt(H1,H5);
+H2 = zero_pad_alt(H2,H5);
+H3 = zero_pad_alt(H3,H5);
+H4 = zero_pad_alt(H4,H5);
+
+h1 = ifft(H1,'symmetric');
+h2 = ifft(H2,'symmetric');
+h3 = ifft(H3,'symmetric');
+h4 = ifft(H4,'symmetric');
+h5 = ifft(H5,'symmetric');
+
+h1 = h1./max(abs(h1));
+h2 = h2./max(abs(h2));
+h3 = h3./max(abs(h3));
+h4 = h4./max(abs(h4));
+h5 = h5./max(abs(h5));
+>>>>>>> 62c3e1607b7aacbef831ff228d525e4add8fb679
+
+%close 1
+figure(1)
+subplot(5,1,1);
+title('zero padded in frequency domain');
+stem(h5);
+legend('500000');
+subplot(5,1,2);
+stem(h4);
+legend('100000');
+subplot(5,1,3);
+stem(h3);
+legend('10000');
+subplot(5,1,4);
+stem(h2);
+legend('1000');
+subplot(5,1,5);
+stem(h1);
+legend('100');
 
 %% Ex 1.2
 
