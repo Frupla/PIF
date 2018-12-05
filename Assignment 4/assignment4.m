@@ -11,20 +11,20 @@ r22 = downsample(r2,floor(1000/100));
 r33 = downsample(r3,floor(10000/100));
 r44 = downsample(r4,floor(100000/100));
 r55 = downsample(r5,floor(500000/100));
-e1 = 1;%sum(r11.^2)/length(r11);
-e2 = 1;%sum(r22.^2)/length(r22);
-e3 = 1;%sum(r33.^2)/length(r33);
-e4 = 1;%sum(r44.^2)/length(r44);
-e5 = 1;%sum(r55.^2)/length(r55);
-r111 = r11./(e1);
-r222 = r22./(e2);
-r333 = r33./(e3);
-r444 = r44./(e4);
-r555 = r55./(e5);
+e1 = sum(r11.^2);
+e2 = sum(r22.^2);
+e3 = sum(r33.^2);
+e4 = sum(r44.^2);
+e5 = sum(r55.^2);
+r111 = r11./(max(r11));
+r222 = r22./(max(r22));
+r333 = r33./(max(r33));
+r444 = r44./(max(r44));
+r555 = r55./(max(r55));
 %%
 
 figure(105)
-plot(r1);
+plot(r111);
 hold on
 plot(r222);
 plot(r333);
@@ -32,7 +32,7 @@ plot(r444);
 plot(r555); 
 hold off
 legend('100','1000','10000','100000','500000');
-title('Downsampled to length of 100');
+title('Downsampled to length of 199, normalized');
 
 
 %% Ex 1.2
