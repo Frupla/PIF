@@ -24,12 +24,13 @@ for i = 1:floor((length(signal)/window_length)/overlap)
 end
 
 figure(n)
-imagesc(mag2db(abs(matrix(:,1:round(points/2)))));
+surf(mag2db(abs(matrix(:,1:round(points/2)))), 'EdgeColor','none');
+axis xy; axis tight; colormap(parula); view(0,90);
+%imagesc(mag2db(abs(matrix(:,1:round(points/2)))));
 colorbar();
 xlabel('Frequency');
 ylabel('Sample number');
-xticklabels({});
-yticklabels({});
 
+    
 
 end
