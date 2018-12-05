@@ -1,22 +1,14 @@
-function [matrix, fs] = spectre(filename, window_type, window_length, overlap, points,n)
+function [matrix, fs] = spectre(filename, window_length, overlap, points,n)
 % Generates a spectrogram based on a sound file.
-% [matrix,fs] = spectre(filename, window_type, window_length, overlap, points, n)
+% [matrix,fs] = spectre(filename    , window_length, overlap, points, n)
 
 [signal, fs] = import_sound(filename);
 
 matrix = zeros(ceil(length(signal)/window_length*overlap),points);
 
-switch(window_type)
-    case 'hann'
-        window = hann(window_length)';
-    case 'rect'
-        [window, t_axis] = generate_square(window_length,1,window_length);
-    otherwise
-       warning('NO YOU, WHY? WHY WOULD YOU DO THAT!? JUST NO. NO!')
-end
+window = hann(window_length)';
 
-
-for i = 1:floor((length(signal)/window_length)/overlap)
+for i = 1:ceil(length(signal)/(window_length*overlap))
    temp = signal(1:window_length);
    temp = temp.*window';
    matrix(i,:) = fft(temp, points); 
