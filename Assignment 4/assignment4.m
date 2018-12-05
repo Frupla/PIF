@@ -19,7 +19,6 @@ plot(tin4,r4);
 plot(tin5,r5);
 hold off
 
-
 r11 = r1;
 r22 = downsample(r2,floor(1000/100));
 r33 = downsample(r3,floor(10000/100));
@@ -197,4 +196,5 @@ imagesc(abs(A(:,1:round(99/2))));
 %I guess we could try filtering it with something?
 %%
 
-spectre('Animal_call.wav','hann',199,0.2,200,1);
+spectre('Animal_call.wav',199,0.2,200,1);
+
