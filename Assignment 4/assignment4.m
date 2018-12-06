@@ -1,5 +1,4 @@
 % Assignment 4
-<<<<<<< HEAD
 %% Ex 1.2 
 % Downlading the files, plotting cross corralations
 set(groot,'defaultLineLineWidth',2);
@@ -9,47 +8,19 @@ set(groot,'defaultAxesFontSize',12);
 [r3,fin3,lags3] = plotTwoSoundFilesAndCorrelation('in_length_10000.wav','out_length_10000.wav',10000,10001,10002,0);
 [r4,fin4,lags4] = plotTwoSoundFilesAndCorrelation('in_length_100000.wav','out_length_100000.wav',100000,100001,100002,0);
 [r5,fin5,lags5] = plotTwoSoundFilesAndCorrelation('in_length_500000.wav','out_length_500000.wav',500000,500001,500002,0);
-=======
-%% Ex 1
-
-
-[r1,fin1, tin1] = plotTwoSoundFilesAndCorrelation('in_length_100.wav','out_length_100.wav',100,101,102,0);
-[r2,fin2, tin2] = plotTwoSoundFilesAndCorrelation('in_length_1000.wav','out_length_1000.wav',1000,1001,1002,0);
-[r3,fin3, tin3] = plotTwoSoundFilesAndCorrelation('in_length_10000.wav','out_length_10000.wav',10000,10001,10002,0);
-[r4,fin4, tin4] = plotTwoSoundFilesAndCorrelation('in_length_100000.wav','out_length_100000.wav',100000,100001,100002,0);
-[r5,fin5, tin5] = plotTwoSoundFilesAndCorrelation('in_length_500000.wav','out_length_500000.wav',500000,500001,500002,0);
-
 
 %close 1
 figure(1)
 hold on
-plot(tin1,r1);
-plot(tin2,r2);
-plot(tin3,r3);
-plot(tin4,r4);
-plot(tin5,r5);
+plot(lags1,r1);
+plot(lags2,r2);
+plot(lags3,r3);
+plot(lags4,r4);
+plot(lags5,r5);
+xlabel('lags');
+ylabel('Cross correlation, not normalized')
+legend('100','1000','10000','100000','500000');
 hold off
-
->>>>>>> 323236cd90f3d5e188ace116b66523c7a5036bd9
-r11 = r1;
-r22 = downsample(r2,floor(1000/100));
-r33 = downsample(r3,floor(10000/100));
-r44 = downsample(r4,floor(100000/100));
-r55 = downsample(r5,floor(500000/100));
-<<<<<<< HEAD
-=======
-
->>>>>>> 323236cd90f3d5e188ace116b66523c7a5036bd9
-e1 = sum(r11.^2);
-e2 = sum(r22.^2);
-e3 = sum(r33.^2);
-e4 = sum(r44.^2);
-e5 = sum(r55.^2);
-r111 = r11./(max(r11));
-r222 = r22./(max(r22));
-r333 = r33./(max(r33));
-r444 = r44./(max(r44));
-r555 = r55./(max(r55));
 
 figure(106)
 plot(lags1./(max(lags1)),r1);
@@ -92,7 +63,6 @@ title('Magnitude Frequency response')
 ylabel('Magnitude[dB]');
 xlabel('Frequency[Hz]')
 legend('100','1000','10000','100000','500000');
-<<<<<<< HEAD
 grid();
 subplot(2,1,2)
 plot(freq5,angle(Y5),'color',[0.4660, 0.6740, 0.1880]);
@@ -109,25 +79,6 @@ ylabel('Phase[rad]');
 xlabel('Frequency[Hz]')
 legend('500000','100000','10000','1000','100');
 grid();
-=======
-title('Downsampled to length of 199, normalized');
-
-e1 = 1;%sum(r11.^2)/length(r11);
-e2 = 1;%sum(r22.^2)/length(r22);
-e3 = 1;%sum(r33.^2)/length(r33);
-e4 = 1;%sum(r44.^2)/length(r44);
-e5 = 1;%sum(r55.^2)/length(r55);
-r111 = r11./max(abs(r11));
-r222 = r22./max(abs(r22));
-r333 = r33./max(abs(r33));
-r444 = r44./max(abs(r44));
-r555 = r55./max(abs(r55));
-
-
->>>>>>> 323236cd90f3d5e188ace116b66523c7a5036bd9
-
-
-<<<<<<< HEAD
 
 %% Doing magnitude comparisons of the various mock filters
 figure(108)
@@ -149,10 +100,10 @@ Y_fildb = 20*log10(abs(Y_fil));
 
 [b1,a1] = butter(2,[0.199 0.201],'bandpass');
 [h1,w1] = freqz(b1,a1);
-y_butt = filter(b,a,y);
+y_butt = filter(b1,a1,y);
 %t_butt = 1:length(y);
 figure(10001)
-impz(b,a);
+impz(b1,a1);
 %figure(111)
 %plot(t,y,'--',t,y_butt,'-')
 %legend('Original Data','Filtered Data')
@@ -226,103 +177,6 @@ legend({'Unfiltered chirp','Chirp filtered with mystery function','Chirp filtere
 %legend({'Unfiltered chirp','Chirp filtered with mystery function','Chirp filtered with 5th order Elliptical filter','Chirp filtered with 2nd order Butterworth filter'},'Position',[0.5 0.6 0.05 0.1])
 grid();
 
-%% Producing the transfer function from output/input
-=======
-[h1,fs1] = plotTwoSoundFilesAndCorrelation('in_length_100.wav','out_length_100.wav',100,101,102,0);
-[h2,fs2] = plotTwoSoundFilesAndCorrelation('in_length_1000.wav','out_length_1000.wav',1000,1001,1002,0);
-[h3,fs3] = plotTwoSoundFilesAndCorrelation('in_length_10000.wav','out_length_10000.wav',10000,10001,10002,0);
-[h4,fs4] = plotTwoSoundFilesAndCorrelation('in_length_100000.wav','out_length_100000.wav',100000,100001,100002,0);
-[h5,fs5] = plotTwoSoundFilesAndCorrelation('in_length_500000.wav','out_length_500000.wav',500000,500001,500002,0);
-
-% figure(10)
-% subplot(5,1,1);
-% title('zero padded in frequency domain');
-% stem(h5);
-% legend('500000');
-% subplot(5,1,2);
-% stem(h4);
-% legend('100000');
-% subplot(5,1,3);
-% stem(h3);
-% legend('10000');
-% subplot(5,1,4);
-% stem(h2);
-% legend('1000');
-% subplot(5,1,5);
-% stem(h1);
-% legend('100');
-
-H1 = fft(h1);
-H2 = fft(h2);
-H3 = fft(h3);
-H4 = fft(h4);
-H5 = fft(h5);
-
-H1 = zero_pad_alt(H1,H5);
-H2 = zero_pad_alt(H2,H5);
-H3 = zero_pad_alt(H3,H5);
-H4 = zero_pad_alt(H4,H5);
-
-h1 = ifft(H1,'symmetric');
-h2 = ifft(H2,'symmetric');
-h3 = ifft(H3,'symmetric');
-h4 = ifft(H4,'symmetric');
-h5 = ifft(H5,'symmetric');
-
-h1 = h1./max(abs(h1));
-h2 = h2./max(abs(h2));
-h3 = h3./max(abs(h3));
-h4 = h4./max(abs(h4));
-h5 = h5./max(abs(h5));
-
-%close 1
-figure(1)
-subplot(5,1,1);
-title('zero padded in frequency domain');
-stem(h5);
-legend('500000');
-subplot(5,1,2);
-stem(h4);
-legend('100000');
-subplot(5,1,3);
-stem(h3);
-legend('10000');
-subplot(5,1,4);
-stem(h2);
-legend('1000');
-subplot(5,1,5);
-stem(h1);
-legend('100');
-
-%% Ex 1.2
->>>>>>> 323236cd90f3d5e188ace116b66523c7a5036bd9
-
-[H1, F1] = plotInOut('100',1);
-[H2, F2] = plotInOut('1000',2);
-[H3, F3] = plotInOut('10000',3);
-[H4, F4] = plotInOut('100000',4);
-[H5, F5] = plotInOut('500000',5);
-
-%close 6
-figure(6)
-hold on
-plot(F5,mag2db(abs(H5)))
-plot(F4,mag2db(abs(H4)))
-plot(F3,mag2db(abs(H3)))
-plot(F2,mag2db(abs(H2)))
-plot(F1,mag2db(abs(H1)))
-ylabel('Magnitude[dB]')
-xlabel('Frequency[Hz]')
-legend('500000 points','100000 points','10000 points','1000 points','100 points');
-xlim([0 5000]);
-title('Magnitude of frequency response of each filter estimate')
-hold off
-
 %% Ex 2
 
-<<<<<<< HEAD
-spectre('Animal_call.wav','hann',199,0.2,200,1);
-%spectre('Animal_call.wav','hann',249,0.1,250,2);
-=======
 spectre('Animal_call.wav',199,0.3,200,1); % Behold! 
->>>>>>> 323236cd90f3d5e188ace116b66523c7a5036bd9
