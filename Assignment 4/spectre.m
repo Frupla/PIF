@@ -3,6 +3,7 @@ function [matrix, fs] = spectre(filename, window_type, window_length, overlap, p
 
 
 [signal, fs] = import_sound(filename);
+sound(signal,fs);
 
 matrix = zeros(ceil(length(signal)/window_length*overlap),points);
 
