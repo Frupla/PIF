@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 function [r,fin,lags] = plotTwoSoundFilesAndCorrelation(namein, nameout, figurenumber1, figurenumber2,figurenumber3,makeABillionPlots)
+=======
+function [r,fin, lags] = plotTwoSoundFilesAndCorrelation(namein, nameout, figurenumber1, figurenumber2,figurenumber3,makeABillionPlots)
+>>>>>>> 323236cd90f3d5e188ace116b66523c7a5036bd9
 [in fin] = audioread(namein);
 [out fout] = audioread(nameout);
 tin = (0:length(in)-1)/fin;
